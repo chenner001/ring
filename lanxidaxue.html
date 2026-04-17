@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>兰溪大学 - 官方网站</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Microsoft YaHei", "宋体", sans-serif;
+            background: #fff;
+            color: #333;
+            line-height: 1.6;
+        }
+        .top-bar {
+            background: #1a3b72;
+            color: white;
+            padding: 8px 30px;
+            font-size: 12px;
+            text-align: right;
+        }
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+        }
+        .top-bar a:hover {
+            text-decoration: underline;
+        }
+        .header {
+            display: flex;
+            align-items: center;
+            padding: 20px 50px;
+            border-bottom: 1px solid #eee;
+        }
+        .logo {
+            font-size: 26px;
+            font-weight: bold;
+            color: #1a3b72;
+        }
+        .nav {
+            background: #254a99;
+        }
+        .nav ul {
+            list-style: none;
+            display: flex;
+            padding: 0 40px;
+        }
+        .nav li {
+            padding: 14px 22px;
+            cursor: pointer;
+            transition: background 0.2s;
+            color: white;
+            font-size: 15px;
+        }
+        .nav li:hover {
+            background: #1a3b72;
+        }
+        .banner {
+            width: 100%;
+            height: 420px;
+            background: url(Em0v7u8fRTqXspoEAAEYO2eSl6p35oYvPkJ5IZdjkHlt8HHXZBGD9g9R-cfMaIzW.jpg) center center no-repeat;
+            background-size: cover;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .panel {
+            display: none;
+        }
+        .panel.active {
+            display: block;
+        }
+        .page-title {
+            font-size: 24px;
+            color: #1a3b72;
+            margin-bottom: 20px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #eee;
+        }
+        .content {
+            font-size: 16px;
+            line-height: 1.8;
+            text-align: justify;
+        }
+        .content p {
+            margin-bottom: 20px;
+            text-indent: 2em;
+        }
+
+        .notice-view-title {
+            font-size: 22px;
+            color: #b70000;
+            margin-bottom: 10px;
+            text-align: center;
+        }
+        .notice-meta {
+            color: #666;
+            font-size: 14px;
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        .highlight {
+            color: #c00;
+            font-weight: bold;
+        }
+
+        .footer {
+            background: #1a3b72;
+            color: white;
+            text-align: center;
+            padding: 30px;
+            font-size: 13px;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="top-bar">
+    <a href="#" target="_blank" id="forumLink">校园论坛</a>
+</div>
+<div class="header"><div class="logo">兰溪大学</div></div>
+
+<div class="nav">
+    <ul>
+        <li data-index="0">首页</li>
+        <li data-index="1">学校概况</li>
+        <li data-index="2">院系设置</li>
+        <li data-index="3">教育教学</li>
+        <li data-index="4">科学研究</li>
+        <li data-index="5">违纪通报</li>
+    </ul>
+</div>
+
+<div class="container">
+    <!-- 首页 -->
+    <div class="panel active">
+        <div class="banner"></div>
+    </div>
+
+    <!-- 学校概况 -->
+    <div class="panel">
+        <h1 class="page-title">学校概况</h1>
+        <div class="content">
+            <p>兰溪大学坐落于兰溪市学府路88号，是一所学科门类齐全、办学特色鲜明的全日制普通高等院校。学校自创办以来，坚持立德树人的根本任务，秉承“厚德、博学、求是、创新”的校训精神，致力于培养德智体美劳全面发展的高素质应用型人才。</p>
+            <p>学校占地面积广阔，办学设施完善，拥有一支结构合理、教学经验丰富的师资队伍。现设有多个二级学院及教学部门，涵盖工学、理学、文学、管理学、经济学等多个学科门类，为学生提供优质的学习环境与发展平台。</p>
+            <p>学校高度重视人才培养、科学研究、社会服务与文化传承创新工作，不断深化教育教学改革，提升办学质量与综合实力，先后荣获多项荣誉称号，在区域高等教育领域发挥着重要作用。</p>
+            <p>近年来，学校不断加强校园文化建设与学生管理工作，严格校风校纪，营造安全、文明、和谐、向上的育人环境，引导学生树立正确的世界观、人生观、价值观，努力成长为担当民族复兴大任的时代新人。</p>
+        </div>
+    </div>
+
+    <!-- 院系设置 -->
+    <div class="panel">
+        <h1 class="page-title">院系设置</h1>
+        <div class="content">
+            <p>学校设有多个二级学院，涵盖工、理、文、管、经等学科门类，专业布局合理，特色鲜明。</p>
+        </div>
+    </div>
+
+    <!-- 教育教学 -->
+    <div class="panel">
+        <h1 class="page-title">教育教学</h1>
+        <div class="content">
+            <p>学校坚持以教学为中心，深化教学改革，强化实践育人，全面提升人才培养质量。</p>
+        </div>
+    </div>
+
+    <!-- 科学研究 -->
+    <div class="panel">
+        <h1 class="page-title">科学研究</h1>
+        <div class="content">
+            <p>学校重视科研创新，鼓励师生开展学术研究与技术攻关，不断提升科研水平与社会服务能力。</p>
+        </div>
+    </div>
+
+    <!-- 违纪通报 -->
+    <div class="panel">
+        <h2 class="notice-view-title">关于对学生陆鸣违纪行为的全校通报批评</h2>
+        <div class="notice-meta">学生工作处 · 2019年4月10日</div>
+        <div class="content">
+            <p>全校各学院、各班级、全体同学：</p>
+            <p>经查，本校学生<span class="highlight">陆鸣（学号：2018-337）</span>在校期间，多次以言语侮辱、孤立排挤等方式对同班同学实施<span class="highlight">校园霸凌</span>行为，对受害同学的身心健康、学习生活造成严重不良影响，其行为严重违反《兰溪大学学生管理规定》《普通高等学校学生管理规定》及校园文明建设相关要求，性质恶劣，影响极坏。</p>
+            <p>事件发生后，学校学生工作处、保卫处及相关学院第一时间介入调查，对事件经过、相关证据进行全面核实，并对受害同学进行心理疏导与关怀帮助。经学校研究决定，依据学生违纪处分相关条例，对<span class="highlight">陆鸣</span>作出<span class="highlight">全校通报批评</span>处分，处分记入学生个人档案，取消本年度所有评奖评优、助学金申请及推优资格。</p>
+            <p>学校在调查中确认，陆鸣的霸凌行为持续时间较长，手段隐蔽，对受害同学造成长期精神压力，导致其出现情绪低落、焦虑失眠等状况，严重干扰正常学习与生活。相关证人证言、聊天记录及心理评估报告等证据材料完整，处分依据充分、程序规范。</p>
+            <p>校园霸凌是学校严令禁止的违纪行为，违背教育初心与道德底线，损害同学权益，破坏校园秩序。学校始终坚持对霸凌行为“零容忍”，无论涉及何人、何种形式，一经发现，坚决严肃处理，绝不姑息迁就。</p>
+            <p>学校希望全体学生以此次事件为警示，严格遵守校规校纪，尊重他人、友善相处，自觉抵制任何形式的欺凌与暴力行为。各学院应加强学生思想道德教育与法治教育，常态化开展反霸凌宣传与排查工作，及时化解矛盾纠纷，切实维护学生合法权益。</p>
+            <p>希望受处分学生深刻反思、认真悔改，改正错误行为，重塑品德修养。全体学生应引以为戒，严守纪律底线，争做文明守纪、品德优良的新时代大学生。</p>
+            <p style="text-align:right; text-indent:0;">兰溪大学学生工作处<br>2019年4月10日</p>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    兰溪大学 © 版权所有<br>地址：兰溪市学府路88号
+</div>
+
+<script>
+    // 获取所有导航 li
+    const navItems = document.querySelectorAll('.nav li');
+    const panels = document.querySelectorAll('.panel');
+
+    function showPanel(index) {
+        panels.forEach((panel, i) => {
+            panel.classList.toggle('active', i === index);
+        });
+    }
+
+    // 为每个 li 绑定点击事件，根据 data-index 切换
+    navItems.forEach((item, idx) => {
+        item.setAttribute('data-index', idx);
+        item.addEventListener('click', function(e) {
+            const targetIndex = parseInt(this.getAttribute('data-index'), 10);
+            showPanel(targetIndex);
+        });
+    });
+
+    // 为校园论坛链接添加跳转
+    const forumLink = document.getElementById('forumLink');
+    if (forumLink) {
+        forumLink.addEventListener('click', function(e) {
+            e.preventDefault();
+            window.open('luntan.html', '_blank');
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>京城陆少 - 微博</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #f5f5f5;
+            color: #333;
+        }
+        .weibo-header {
+            background: #e6162d;
+            color: white;
+            padding: 12px 20px;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 680px;
+            margin: 20px auto;
+            background: white;
+            border-radius: 4px;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .user-info {
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            border-bottom: 1px solid #eee;
+        }
+        .avatar {
+            width: 60px;
+            height: 60px;
+            background: #ccc;
+            border-radius: 50%;
+            margin-right: 15px;
+            background-image: url(https://p.qqan.com/up/2021-2/16229461036870585.jpg);
+            background-size: cover;
+        }
+        .username {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 4px;
+        }
+        .user-desc {
+            font-size: 12px;
+            color: #999;
+        }
+        .weibo-item {
+            padding: 20px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .weibo-content {
+            font-size: 15px;
+            line-height: 1.6;
+            margin-bottom: 10px;
+        }
+        .weibo-time {
+            font-size: 12px;
+            color: #999;
+            margin-bottom: 10px;
+        }
+        .comment {
+            background: #f7f7f7;
+            padding: 10px 12px;
+            border-radius: 4px;
+            font-size: 13px;
+            color: #666;
+            margin-top: 8px;
+        }
+        .comment-name {
+            color: #2d7bb7;
+            font-weight: bold;
+        }
+        .weibo-actions {
+            font-size: 12px;
+            color: #999;
+            display: flex;
+            gap: 20px;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="weibo-header">微博</div>
+    <div class="container">
+        <div class="user-info">
+            <div class="avatar"></div>
+            <div>
+                <div class="username">京城陆少</div>
+                <div class="user-desc">本地企业家独子 | 及时行乐</div>
+            </div>
+        </div>
+
+        <!-- 1. 最新：2019.05.13 威胁微博 -->
+        <div class="weibo-item">
+            <div class="weibo-content">
+                老子今天就要好好教育教育她，还敢偷偷去告老师？真当我拿她没办法了？就算捅到我爸那儿去，大不了再断我一阵子生活费，我照样能让她知道得罪我的下场！
+            </div>
+            <div class="weibo-time">2019年05月13日 来自 iPhone客户端</div>
+            <div class="weibo-actions">
+                <span>转发 21</span>
+                <span>评论 56</span>
+                <span>点赞 132</span>
+            </div>
+        </div>
+
+        <!-- 2. 2019.04.30 球鞋炫富 -->
+        <div class="weibo-item">
+            <div class="weibo-content">
+                限量款球鞋又到手一双，也就一般般吧，凑合穿穿。
+            </div>
+            <div class="weibo-time">2019年04月30日 来自 iPhone客户端</div>
+            <div class="weibo-actions">
+                <span>转发 36</span>
+                <span>评论 49</span>
+                <span>点赞 328</span>
+            </div>
+        </div>
+
+        <!-- 3. 2019.03.08 零花钱买单 -->
+        <div class="weibo-item">
+            <div class="weibo-content">
+                零花钱到账，今晚全场消费由陆公子买单，想玩的朋友直接来！
+            </div>
+            <div class="weibo-time">2019年03月08日 来自 iPhone客户端</div>
+            <div class="weibo-actions">
+                <span>转发 89</span>
+                <span>评论 105</span>
+                <span>点赞 666</span>
+            </div>
+        </div>
+
+        <!-- 4. 2019.01.20 新车炫富 -->
+        <div class="weibo-item">
+            <div class="weibo-content">
+                刚提的新车，随便开开代步，还是觉得红色够霸气，符合我的气质。
+            </div>
+            <div class="weibo-time">2019年01月20日 来自 iPhone客户端</div>
+            <div class="weibo-actions">
+                <span>转发 122</span>
+                <span>评论 156</span>
+                <span>点赞 899</span>
+            </div>
+        </div>
+
+        <!-- 5. 最早：2018.02.09 金条微博 + 评论 -->
+        <div class="weibo-item">
+            <div class="weibo-content">
+                老爹说每隔五年送我一根金条，终于拿到第四根了哈哈哈，攒着以后当传家宝～
+            </div>
+            <div class="weibo-time">2018年02月09日 来自 iPhone客户端</div>
+            <div class="comment">
+                <span class="comment-name">热心网友</span>：鸣哥生日快乐啊！
+            </div>
+            <div class="weibo-actions">
+                <span>转发 68</span>
+                <span>评论 121</span>
+                <span>点赞 588</span>
+            </div>
+        </div>
+
+    </div>
+</body>
+</html>

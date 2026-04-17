@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>致夜姐</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 深色背景衬托信纸 */
+        body {
+            background: #1a1a1a;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        /* 发黄信纸主体 */
+        .letter {
+            width: 100%;
+            max-width: 750px;
+            padding: 60px 50px;
+            background: #f6eed2;
+            background-image: 
+                url("https://www.transparenttextures.com/patterns/old-paper.png");
+            border-radius: 2px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4), 0 5px 12px rgba(0,0,0,0.2);
+            position: relative;
+            line-height: 1.8;
+            font-family: "KaiTi", "STKaiti", "SimSun", serif;
+            font-size: 19px;
+            color: #2c2317;
+        }
+
+        /* 信纸边角复古效果 */
+        .letter::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(transparent 60%, rgba(146, 121, 80, 0.15));
+            pointer-events: none;
+        }
+
+        /* 段落间距 */
+        p {
+            margin-bottom: 18px;
+            text-align: justify;
+        }
+
+        /* 称呼与结尾样式 */
+        .title {
+            font-size: 21px;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .ending {
+            margin-top: 40px;
+            text-align: right;
+            font-style: italic;
+        }
+    </style>
+</head>
+<body>
+    <div class="letter">
+        <p class="title">夜姐：</p>
+
+        <p>如果你看到这封信，说明我已经不在了。或者，你终于来找我了。</p>
+
+        <p>我知道你很聪明，很冷静，甚至有点冷酷。但你不是坏人。你只是不知道怎么表达感情，习惯把所有温柔都藏在坚硬的外壳之下，可我一直都懂。</p>
+
+        <p>那天火灾，你不顾一切冲进火海救了我。你紧紧抱着我说：“我们永远在一起。”为了我，你的右手被大火严重烧伤，留下了无法抹去的疤痕。我也亲手为自己烧出一块疤，那是我们之间最坚定的约定，是生死都无法分开的印记。</p>
+
+        <p>从那天起我就暗暗发誓，如果有一天你需要我，我一定会拼尽全力保护你，哪怕付出我的生命，我也绝不会退缩。</p>
+
+        <p>所以当我得知陆鸣要约你打架、想要伤害你的时候，我立刻就做好了决定：我替你去。我穿上了你常穿的衣服，戴上了那枚戒指，他一定认不出来。</p>
+
+        <p>如果他只是动手打我，我能扛住所有伤痛；如果他真的对我下了杀手……至少你能平安无事，这就足够了。</p>
+
+        <p>夜姐，千万不要自责，更不要难过。这一切都是我心甘情愿的选择，我从未后悔。</p>
+
+        <p>你一定要好好活着，带着我的份一起，平安、快乐地活下去。</p>
+
+        <p class="ending">永远。</p>
+    </div>
+</body>
+</html>

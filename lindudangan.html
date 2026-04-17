@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>警方档案管理系统 - 林渡档案</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", "SimHei", "Courier New", monospace;
+    }
+
+    :root {
+      --police-blue: #003366;
+      --police-light: #005599;
+      --police-red: #990000;
+      --bg-gray: #f0f2f5;
+      --border-gray: #8a9bb0;
+      --text-dark: #1a202c;
+      --text-light: #2c3e4e;
+    }
+
+    body {
+      background-color: var(--bg-gray);
+      color: var(--text-dark);
+      line-height: 1.5;
+    }
+
+    .header {
+      background-color: var(--police-blue);
+      color: white;
+      padding: 12px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 3px solid var(--police-red);
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .system-title {
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 14px;
+    }
+
+    .user-info span {
+      border-left: 1px solid rgba(255,255,255,0.3);
+      padding-left: 15px;
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 25px auto;
+      padding: 0 20px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--border-gray);
+      margin-bottom: 20px;
+    }
+
+    .panel-header {
+      background-color: var(--police-light);
+      color: white;
+      padding: 10px 18px;
+      font-size: 16px;
+      font-weight: bold;
+      border-bottom: 1px solid #2c4c6c;
+    }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .detail-item {
+      display: flex;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 8px 0;
+    }
+
+    .detail-label {
+      width: 110px;
+      color: var(--text-light);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .detail-value {
+      flex: 1;
+      font-size: 13px;
+      color: #1a2a3a;
+    }
+
+    .warning-bar {
+      background-color: #fef3c7;
+      color: #92400e;
+      padding: 10px 16px;
+      border-left: 4px solid #b45309;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 12px;
+      color: #4a627a;
+      border-top: 1px solid var(--border-gray);
+      margin-top: 30px;
+    }
+
+    .action-area {
+      margin-top: 24px;
+      padding-top: 20px;
+      border-top: 1px solid var(--border-gray);
+      text-align: center;
+    }
+    .action-area p {
+      margin-bottom: 16px;
+      font-weight: 500;
+      color: #1f3a4b;
+    }
+    .btn-group {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .btn {
+      padding: 8px 28px;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+      font-weight: 500;
+      background-color: #2c5282;
+      color: white;
+    }
+    .btn-danger {
+      background-color: var(--police-red);
+    }
+    .btn-danger:hover {
+      background-color: #7a0000;
+    }
+    .btn-secondary {
+      background-color: #5a6e7c;
+    }
+    .btn-secondary:hover {
+      background-color: #3f5564;
+    }
+    .btn:hover {
+      opacity: 0.9;
+    }
+    .header, .panel, .panel-header, .panel-body {
+      border-radius: 0px;
+    }
+    .hidden-timer {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div class="logo-box">
+    <span class="system-title">警方档案管理系统</span>
+  </div>
+  <div class="user-info">
+    <div>警员编号：PA20250601</div>
+    <span>管理员：系统管理员</span>
+  </div>
+</div>
+
+<div class="container">
+  <div class="warning-bar">
+    【系统声明】本系统为警方内部专用，所有操作将被记录，严禁非法查询、泄露档案信息，违者依法追责。
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      档案详情 · 林渡
+    </div>
+    <div class="panel-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <div class="detail-label">档案编号</div>
+          <div class="detail-value">DA-2020-0801-01</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">姓名</div>
+          <div class="detail-value">林渡</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">曾用名</div>
+          <div class="detail-value">沈夜</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">性别</div>
+          <div class="detail-value">女</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">出生日期</div>
+          <div class="detail-value">1998年11月12日</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">职业</div>
+          <div class="detail-value">法医</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">任职单位</div>
+          <div class="detail-value">兰溪市公安局刑事科学技术研究所</div>
+        </div>
+        <div class="detail-item">
+          <div class="detail-label">备注</div>
+          <div class="detail-value">现任主任法医师，公安部刑事技术特长专家。</div>
+        </div>
+      </div>
+
+      <div class="action-area">
+        <p>是否删除曾用名“沈夜”？</p>
+        <div class="btn-group">
+          <button class="btn btn-danger" id="btnYes">是</button>
+          <button class="btn btn-secondary" id="btnNo">否</button>
+        </div>
+        <div class="hidden-timer" id="countdownMsg"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  警方档案管理系统 © 2026 公安机关内部管理平台 ｜ 严禁外传 ｜ 操作日志已记录
+</div>
+
+<script>
+  let timeoutId = null;
+  let intervalId = null;
+
+  function clearTimers() {
+    if (timeoutId) {
+      clearTimeout(timeoutId);
+      timeoutId = null;
+    }
+    if (intervalId) {
+      clearInterval(intervalId);
+      intervalId = null;
+    }
+  }
+
+  function startTimer() {
+    let secondsLeft = 10;
+    intervalId = setInterval(() => {
+      secondsLeft--;
+      if (secondsLeft <= 0) {
+        clearTimers();
+        // 修改：使用当前页面跳转，避免被浏览器拦截弹窗
+        window.location.href = 'chenmo.html';
+      }
+    }, 1000);
+    timeoutId = setTimeout(() => {
+      // 后备清除，由 interval 完成跳转
+    }, 10000);
+  }
+
+  function onYes() {
+    clearTimers();
+    window.open('xiaohuizhengju.html', '_blank');
+  }
+
+  function onNo() {
+    clearTimers();
+    window.open('zishou.html', '_blank');
+  }
+
+  document.getElementById('btnYes').addEventListener('click', onYes);
+  document.getElementById('btnNo').addEventListener('click', onNo);
+
+  startTimer();
+</script>
+</body>
+</html>

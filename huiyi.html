@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>刻痕 · 我的记忆</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-family: '宋体', 'SimSun', 'Times New Roman', serif;
+            overflow: hidden;
+        }
+
+        /* 全屏黑色容器 */
+        .screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+            text-align: center;
+            z-index: 10;
+        }
+
+        .text-container {
+            max-width: 85%;
+            padding: 2rem;
+            font-size: 1.8rem;
+            line-height: 1.5;
+            font-weight: 400;
+            letter-spacing: 1px;
+            word-break: break-word;
+            white-space: pre-wrap;
+            opacity: 0;
+            transition: opacity 1s ease;
+            font-family: '宋体', 'SimSun', 'Times New Roman', serif;
+        }
+
+        /* 白字样式 */
+        .white-text {
+            color: #ffffff;
+            text-shadow: 0 0 4px rgba(255,255,255,0.3);
+        }
+
+        /* 适配小屏幕 */
+        @media (max-width: 600px) {
+            .text-container {
+                font-size: 1.2rem;
+                padding: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="screen" id="mainScreen">
+    <div class="text-container" id="textBox"></div>
+</div>
+
+<script>
+    // 台词数组，严格按照要求顺序，每个双引号为一句
+    const lines = [
+        "2008年6月，福利院着火。我拉着苏念的手穿过走廊。火苗舔上我的右手，我咬牙没松手。冲出去后，她哭着说：‘沈栀姐姐，你的手……’我笑着说：‘没事，这是刻痕。我们永远在一起。’",
+        "2019年5月13日凌晨，我来晚了。",
+        "我把苏晚装进铁桶，灌入水泥。推入河道前，我在她额头亲了一下。‘苏晚，你替我死了。我替你活着。我会让所有人都知道真相，包括我自己。’",
+        "你，法医林渡，就是沈夜。",
+        "你一直在调查自己。",
+        "苏晚替你赴约，被陆鸣误杀。",
+        "你杀了陆鸣，为苏晚报仇。",
+        "你把苏晚封在铁桶里，沉入河道。",
+        "你亲手解剖了自己最好的朋友。",
+        "你摘下手套，右手只剩大面积的伤疤，飞鸟早已飞走。",
+        "现在，你面对自己的真相。"
+    ];
+
+    // 停留时间配置：前三句每句5秒，后面每句2秒 (单位：毫秒)
+    const durations = [
+        5000,  // 第1句 5秒
+        5000,  // 第2句 5秒
+        5000,  // 第3句 5秒
+        2000,  // 第4句 2秒
+        2000,  // 第5句 2秒
+        2000,  // 第6句 2秒
+        2000,  // 第7句 2秒
+        2000,  // 第8句 2秒
+        2000,  // 第9句 2秒
+        2000,  // 第10句 2秒
+        2000   // 第11句 2秒
+    ];
+
+    const textBox = document.getElementById('textBox');
+    let currentIndex = 0;
+    let fadeTimeout = null;
+    let displayTimeout = null;
+
+    // 显示当前句子（渐入效果）
+    function showLine(index) {
+        if (index >= lines.length) {
+            // 全部播放完毕，跳转到 lindudangan.html
+            window.location.href = 'lindudangan.html';
+            return;
+        }
+        // 先设置文本内容，透明度为0
+        textBox.style.opacity = '0';
+        // 延迟一点点后更新文字并渐显
+        setTimeout(() => {
+            textBox.innerText = lines[index];
+            textBox.style.opacity = '1';
+        }, 50);
+        // 设置停留时间后切换到下一句
+        displayTimeout = setTimeout(() => {
+            showLine(index + 1);
+        }, durations[index]);
+    }
+
+    // 初始黑屏5秒（全黑无文字）
+    function startSequence() {
+        // 最开始5秒黑屏，不显示任何文字
+        setTimeout(() => {
+            // 黑屏结束后开始显示第一句
+            showLine(0);
+        }, 5000);
+    }
+
+    // 启动
+    startSequence();
+
+    // 清理定时器（理论上不需要，但为了页面卸载）
+    window.addEventListener('beforeunload', function() {
+        if (fadeTimeout) clearTimeout(fadeTimeout);
+        if (displayTimeout) clearTimeout(displayTimeout);
+    });
+</script>
+</body>
+</html>

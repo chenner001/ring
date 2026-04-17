@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>警局档案管理系统 - 官方专用</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: "Microsoft YaHei", "SimHei", "Courier New", monospace;
+    }
+
+    :root {
+      --police-blue: #003366;
+      --police-light: #005599;
+      --police-red: #990000;
+      --bg-gray: #f0f2f5;
+      --border-gray: #8a9bb0;
+      --text-dark: #1a202c;
+      --text-light: #2c3e4e;
+    }
+
+    body {
+      background-color: var(--bg-gray);
+      color: var(--text-dark);
+      line-height: 1.5;
+      position: relative;
+    }
+
+    .header {
+      background-color: var(--police-blue);
+      color: white;
+      padding: 12px 30px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-bottom: 3px solid var(--police-red);
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+    }
+
+    .system-title {
+      font-size: 22px;
+      font-weight: bold;
+      letter-spacing: 2px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      font-size: 14px;
+    }
+
+    .user-info span {
+      border-left: 1px solid rgba(255,255,255,0.3);
+      padding-left: 15px;
+    }
+
+    .btn {
+      padding: 6px 16px;
+      border: none;
+      cursor: pointer;
+      font-size: 13px;
+      font-weight: 500;
+      background-color: #2c5282;
+      color: white;
+    }
+
+    .btn:hover {
+      background-color: #1a3a5f;
+    }
+
+    .btn-danger {
+      background-color: var(--police-red);
+    }
+
+    .btn-danger:hover {
+      background-color: #7a0000;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 25px auto;
+      padding: 0 20px;
+    }
+
+    .panel {
+      background: white;
+      border: 1px solid var(--border-gray);
+      margin-bottom: 20px;
+    }
+
+    .panel-header {
+      background-color: var(--police-light);
+      color: white;
+      padding: 10px 18px;
+      font-size: 16px;
+      font-weight: bold;
+      border-bottom: 1px solid #2c4c6c;
+    }
+
+    .panel-body {
+      padding: 20px;
+    }
+
+    .search-row {
+      display: flex;
+      align-items: flex-end;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .form-group {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      flex: 2;
+      min-width: 260px;
+    }
+
+    .form-group label {
+      font-size: 13px;
+      color: var(--text-light);
+      font-weight: 600;
+    }
+
+    .form-control {
+      padding: 8px 12px;
+      border: 1px solid var(--border-gray);
+      width: 100%;
+      font-size: 14px;
+      background: white;
+    }
+
+    .form-control:focus {
+      outline: none;
+      border-color: var(--police-blue);
+      background: #fefef7;
+    }
+
+    .btn-primary {
+      background-color: var(--police-blue);
+      padding: 8px 22px;
+    }
+
+    .btn-reset {
+      background-color: #5a6e7c;
+    }
+
+    .detail-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+    }
+
+    .detail-item {
+      display: flex;
+      border-bottom: 1px solid #e2e8f0;
+      padding: 8px 0;
+    }
+
+    .detail-label {
+      width: 110px;
+      color: var(--text-light);
+      font-weight: 600;
+      font-size: 13px;
+    }
+
+    .detail-value {
+      flex: 1;
+      font-size: 13px;
+      color: #1a2a3a;
+    }
+
+    .full-width {
+      grid-column: span 2;
+    }
+
+    .warning-bar {
+      background-color: #fef3c7;
+      color: #92400e;
+      padding: 10px 16px;
+      border-left: 4px solid #b45309;
+      margin-bottom: 20px;
+      font-size: 13px;
+    }
+
+    .footer {
+      text-align: center;
+      padding: 15px;
+      font-size: 12px;
+      color: #4a627a;
+      border-top: 1px solid var(--border-gray);
+      margin-top: 30px;
+    }
+
+    .header, .panel, .panel-header, .panel-body, .form-control, .btn, .warning-bar {
+      border-radius: 0px;
+    }
+
+    .empty-message {
+      color: #6c7a89;
+      text-align: center;
+      padding: 20px;
+    }
+
+    .verify-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.6);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 1000;
+    }
+    .verify-panel {
+      background: white;
+      border: 2px solid var(--police-blue);
+      width: 360px;
+      padding: 20px;
+      box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+    }
+    .verify-panel p {
+      margin-bottom: 15px;
+      font-weight: bold;
+      font-size: 14px;
+    }
+    .verify-input {
+      width: 100%;
+      padding: 8px;
+      border: 1px solid var(--border-gray);
+      margin-bottom: 15px;
+      font-size: 14px;
+    }
+    .verify-buttons {
+      display: flex;
+      justify-content: flex-end;
+      gap: 10px;
+    }
+    .verify-confirm {
+      background-color: var(--police-blue);
+      color: white;
+    }
+    .verify-cancel {
+      background-color: #6c757d;
+      color: white;
+    }
+
+    /* 微信消息弹窗样式 */
+    .wechat-notification {
+      position: fixed;
+      bottom: 80px;
+      right: 20px;
+      width: 280px;
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+      border-left: 4px solid #07c160;
+      cursor: pointer;
+      z-index: 2000;
+      animation: slideIn 0.3s ease;
+      padding: 12px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
+    @keyframes slideIn {
+      from {
+        transform: translateX(100%);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    .wechat-avatar {
+      width: 40px;
+      height: 40px;
+      background: #07c160;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: bold;
+      font-size: 18px;
+    }
+    .wechat-content {
+      flex: 1;
+    }
+    .wechat-name {
+      font-weight: 600;
+      font-size: 14px;
+      color: #111;
+    }
+    .wechat-message {
+      font-size: 12px;
+      color: #666;
+      margin-top: 4px;
+    }
+    .wechat-time {
+      font-size: 10px;
+      color: #999;
+      text-align: right;
+    }
+    .wechat-notification:hover {
+      background: #f5f5f5;
+    }
+  </style>
+</head>
+<body>
+<div class="header">
+  <div class="logo-box">
+    <span class="system-title">警局档案管理系统</span>
+  </div>
+  <div class="user-info">
+    <div>警员编号：PA20250601</div>
+    <span>管理员：系统管理员</span>
+    <button class="btn btn-danger" id="logoutBtn">安全退出</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="warning-bar">
+    【系统声明】本系统为警方内部专用，所有操作将被记录，严禁非法查询、泄露档案信息，违者依法追责。
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      档案信息查询
+    </div>
+    <div class="panel-body">
+      <div class="search-row">
+        <div class="form-group">
+          <label>关键词检索（姓名/物品/证物名称）</label>
+          <input type="text" class="form-control" id="searchKeyword" placeholder="输入查询内容">
+        </div>
+        <button class="btn btn-primary" id="searchBtn">查询档案</button>
+        <button class="btn btn-reset" id="resetBtn">重置</button>
+      </div>
+      <div style="font-size: 12px; color: #6f7c8a; margin-top: 12px;">
+        说明：查询人名时需验证出生日期（8位数字），物品及物证可直接查看。
+      </div>
+    </div>
+  </div>
+
+  <div class="panel">
+    <div class="panel-header">
+      档案详情
+    </div>
+    <div class="panel-body" id="detailContainer">
+      <div class="empty-message">等待查询指令。</div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  警方档案管理系统 © 2026 公安机关内部管理平台 ｜ 严禁外传 ｜ 操作日志已记录
+</div>
+
+<script>
+  // ---------- 档案数据库 ----------
+  const archiveData = {
+    "林渡": {
+      type: "person",
+      birth: "19981112",
+      content: {
+        档案编号: "DA-2020-0801-01",
+        姓名: "林渡",
+        曾用名: "沈夜",
+        性别: "女",
+        出生日期: "1998年11月12日",
+        职业: "法医",
+        任职单位: "兰溪市公安局刑事科学技术研究所",
+        备注: "现任主任法医师，公安部刑事技术特长专家。"
+      }
+    },
+    "沈夜": {
+      type: "person",
+      birth: "19981112",
+      content: {
+        档案编号: "DA-2019-0514-01",
+        姓名: "沈夜",
+        曾用名: "沈栀",
+        性别: "女",
+        出生日期: "1998年11月12日",
+        户籍状态: "失踪人员（2019年5月14日后失联）",
+        早年经历: "幼年于光曦福利院生活，后被本市富商沈清书领养。",
+        备注: "与苏晚关系密切。DNA样本曾与河道女尸比对完全吻合。"
+      }
+    },
+    "苏晚": {
+      type: "person",
+      birth: "19991212",
+      content: {
+        档案编号: "DA-2019-0514-02",
+        姓名: "苏晚",
+        曾用名: "苏念",
+        性别: "女",
+        出生日期: "1999年12月12日",
+        户籍状态: "失踪人员（2019年5月14日报失）",
+        早年经历: "幼年于光曦福利院生活，后被普通工薪家庭领养。",
+        备注: "疑似20160416河道女尸案关联人员，但该尸体DNA比对结果与沈夜100%吻合。目前案件仍在侦查中。"
+      }
+    },
+    "陆鸣": {
+      type: "person",
+      birth: "19961102",
+      content: {
+        档案编号: "DA-2019-0514-03",
+        姓名: "陆鸣",
+        曾用名: "无",
+        性别: "男",
+        出生日期: "1996年11月2日",
+        户籍状态: "失踪人员（2019年5月14日后下落不明）",
+        家庭背景: "本地商人陆氏之子。",
+        备注: "至今未发现尸体，案件持续侦查中。与苏晚、沈夜曾有校园冲突记录。"
+      }
+    },
+    "匕首": {
+      type: "object",
+      content: {
+        物证编号: "WZ-2019-0516-01",
+        名称: "单刃匕首",
+        提取地点: "城南废弃工厂附近河道",
+        化验结果: "刀柄残留指纹经比对属于陆鸣；同时检出罕见护手霜成分，品牌为 Occi。",
+        保管状态: "已封存于物证室，待进一步比对。"
+      }
+    },
+    "Occi": {
+      type: "object",
+      content: {
+        物证编号: "HX-2019-078",
+        名称: "护手霜残留物分析",
+        品牌: "Occi",
+        关联证物: "匕首刀柄微量成分",
+        备注: "该品牌护手霜为特定批次。"
+      }
+    },
+    "护手霜": {
+      type: "object",
+      content: {
+        物证编号: "HX-2019-078",
+        名称: "护手霜成分报告",
+        品牌: "Occi",
+        关联说明: "与凶器刀柄检出物质一致，成分稀有，目前仅少数人持有。"
+      }
+    },
+    "光曦福利院": {
+      type: "object",
+      content: {
+        档案编号: "SOC-2008-0721",
+        名称: "光曦福利院档案摘录",
+        备注: "沈栀（沈夜）与苏念（苏晚）曾于2008年前后在该院生活，火灾后分别被领养。具体记录参见卷宗。"
+      }
+    }
+  };
+
+  let pendingRedirectTimer = null;
+  let daggerNotificationTimer = null;
+  let currentNotification = null;
+
+  // 移除已有的微信弹窗
+  function removeNotification() {
+    if (currentNotification && currentNotification.parentNode) {
+      currentNotification.remove();
+      currentNotification = null;
+    }
+  }
+
+  // 创建微信消息弹窗（永久显示，直到点击）
+  function showWechatNotification() {
+    removeNotification(); // 先移除旧的，避免重复
+    const notification = document.createElement('div');
+    notification.className = 'wechat-notification';
+    notification.innerHTML = `
+      <div class="wechat-avatar">小</div>
+      <div class="wechat-content">
+        <div class="wechat-name">小张</div>
+        <div class="wechat-message">林法医，有新线索！</div>
+      </div>
+      <div class="wechat-time">刚刚</div>
+    `;
+    document.body.appendChild(notification);
+    currentNotification = notification;
+
+    // 点击弹窗跳转并关闭
+    notification.addEventListener('click', function() {
+      window.open('xiaozhang.html', '_blank');
+      removeNotification();
+    });
+  }
+
+  function showVerifyDialog(personName, expectedBirth, callback) {
+    const existing = document.querySelector('.verify-overlay');
+    if (existing) existing.remove();
+
+    const overlay = document.createElement('div');
+    overlay.className = 'verify-overlay';
+    overlay.innerHTML = `
+      <div class="verify-panel">
+        <p>身份验证</p>
+        <div>请输入“${personName}”的出生日期（8位数字，格式：YYYYMMDD）：</div>
+        <input type="text" class="verify-input" id="verifyBirthInput" placeholder="">
+        <div class="verify-buttons">
+          <button class="verify-cancel" id="verifyCancelBtn">取消</button>
+          <button class="verify-confirm" id="verifyConfirmBtn">确认</button>
+        </div>
+      </div>
+    `;
+    document.body.appendChild(overlay);
+
+    const inputField = overlay.querySelector('#verifyBirthInput');
+    const confirmBtn = overlay.querySelector('#verifyConfirmBtn');
+    const cancelBtn = overlay.querySelector('#verifyCancelBtn');
+
+    const closeDialog = () => overlay.remove();
+
+    confirmBtn.addEventListener('click', () => {
+      const inputVal = inputField.value.trim();
+      if (/^\d{8}$/.test(inputVal) && inputVal === expectedBirth) {
+        closeDialog();
+        callback(true);
+      } else {
+        alert(`验证失败。出生日期不匹配，无法查看“${personName}”的档案。`);
+        closeDialog();
+        callback(false);
+      }
+    });
+
+    cancelBtn.addEventListener('click', () => {
+      closeDialog();
+      callback(false);
+    });
+
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) {
+        closeDialog();
+        callback(false);
+      }
+    });
+
+    inputField.focus();
+  }
+
+  function renderPersonCard(data) {
+    let html = `<div class="detail-grid">`;
+    for (let [key, value] of Object.entries(data.content)) {
+      html += `<div class="detail-item">
+                  <div class="detail-label">${key}</div>
+                  <div class="detail-value">${value || '无'}</div>
+                </div>`;
+    }
+    html += `</div>`;
+    return html;
+  }
+
+  function renderObjectCard(data) {
+    let html = `<div class="detail-grid">`;
+    for (let [key, value] of Object.entries(data.content)) {
+      html += `<div class="detail-item">
+                  <div class="detail-label">${key}</div>
+                  <div class="detail-value">${value || '无'}</div>
+                </div>`;
+    }
+    html += `</div>`;
+    return html;
+  }
+
+  function performSearch() {
+    const keywordInput = document.getElementById('searchKeyword');
+    let keyword = keywordInput.value.trim();
+    const detailContainer = document.getElementById('detailContainer');
+
+    if (keyword === "") {
+      detailContainer.innerHTML = `<div class="empty-message">错误：请输入有效关键词。</div>`;
+      return;
+    }
+
+    let matchedKey = null;
+    for (let key in archiveData) {
+      if (key.toLowerCase() === keyword.toLowerCase()) {
+        matchedKey = key;
+        break;
+      }
+    }
+
+    if (!matchedKey) {
+      detailContainer.innerHTML = `<div class="empty-message">未找到与“${keyword}”相关的档案。</div>`;
+      return;
+    }
+
+    const record = archiveData[matchedKey];
+
+    if (record.type === "person") {
+      showVerifyDialog(matchedKey, record.birth, (isValid) => {
+        if (isValid) {
+          detailContainer.innerHTML = renderPersonCard(record);
+          if (matchedKey === "林渡") {
+            if (pendingRedirectTimer) clearTimeout(pendingRedirectTimer);
+            pendingRedirectTimer = setTimeout(() => {
+              window.location.href = 'huiyi.html';
+            }, 5000);
+          }
+        } else {
+          detailContainer.innerHTML = `<div class="empty-message">验证未通过，无法查看“${matchedKey}”的档案。</div>`;
+        }
+      });
+    } 
+    else if (record.type === "object") {
+      detailContainer.innerHTML = renderObjectCard(record);
+      if (matchedKey === "匕首") {
+        if (daggerNotificationTimer) clearTimeout(daggerNotificationTimer);
+        daggerNotificationTimer = setTimeout(() => {
+          showWechatNotification();
+        }, 3000);
+      }
+    } 
+    else {
+      detailContainer.innerHTML = `<div class="empty-message">档案格式异常。</div>`;
+    }
+  }
+
+  function resetSearch() {
+    if (pendingRedirectTimer) {
+      clearTimeout(pendingRedirectTimer);
+      pendingRedirectTimer = null;
+    }
+    if (daggerNotificationTimer) {
+      clearTimeout(daggerNotificationTimer);
+      daggerNotificationTimer = null;
+    }
+    removeNotification();
+    document.getElementById('searchKeyword').value = '';
+    document.getElementById('detailContainer').innerHTML = `<div class="empty-message">已重置。请输入关键词进行检索。</div>`;
+  }
+
+  function logout() {
+    if (confirm("确认退出系统？")) {
+      alert("已安全退出。");
+      resetSearch();
+    }
+  }
+
+  document.getElementById('searchBtn').addEventListener('click', performSearch);
+  document.getElementById('resetBtn').addEventListener('click', resetSearch);
+  document.getElementById('logoutBtn').addEventListener('click', logout);
+
+  const inputElem = document.getElementById('searchKeyword');
+  inputElem.addEventListener('keypress', function(e) {
+    if (e.key === 'Enter') {
+      performSearch();
+    }
+  });
+</script>
+</body>
+</html>

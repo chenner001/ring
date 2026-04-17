@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>苏念碎碎念 - 个人日记</title>
+<style>
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+    body {
+        font-family: "Microsoft YaHei", serif;
+        background: #fdfbf7;
+        color: #5c5c5c;
+        line-height: 1.8;
+    }
+    .container {
+        max-width: 700px;
+        margin: 50px auto;
+        padding: 0 20px;
+    }
+    .blog-title {
+        text-align: center;
+        font-size: 26px;
+        font-weight: bold;
+        color: #444;
+        margin-bottom: 10px;
+    }
+    .blog-desc {
+        text-align: center;
+        font-size: 14px;
+        color: #999;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 1px solid #eee;
+    }
+
+    /* 密码框 */
+    .pwd-box {
+        text-align: center;
+        margin-bottom: 40px;
+    }
+    .pwd-tip {
+        font-size: 13px;
+        color: #999;
+        margin-bottom: 10px;
+    }
+    .pwd-input {
+        padding: 8px 12px;
+        width: 240px;
+        border: 1px solid #ddd;
+        border-radius: 4px;
+        font-size: 14px;
+    }
+    .pwd-btn {
+        padding: 8px 14px;
+        background: #d7b8a8;
+        color: #fff;
+        border: none;
+        border-radius: 4px;
+        margin-left: 6px;
+        cursor: pointer;
+    }
+    .error {
+        color: #e63946;
+        font-size: 12px;
+        margin-top: 8px;
+        display: none;
+    }
+
+    /* 文章默认模糊 */
+    .article {
+        margin-bottom: 50px;
+        position: relative;
+        padding-left: 25px;
+        filter: blur(6px);
+        transition: filter 0.8s ease;
+    }
+    .article:before {
+        content: "";
+        position: absolute;
+        left: 0;
+        top: 8px;
+        width: 8px;
+        height: 8px;
+        background: #d7b8a8;
+        border-radius: 50%;
+    }
+    .date {
+        font-size: 13px;
+        color: #b8a99f;
+        margin-bottom: 8px;
+    }
+    .content {
+        font-size: 15px;
+        color: #4a4a4a;
+        line-height: 1.9;
+        text-align: justify;
+    }
+
+    /* 解锁后清除模糊 */
+    .unlocked .article {
+        filter: blur(0);
+    }
+
+    .footer {
+        text-align: center;
+        font-size: 12px;
+        color: #bbb;
+        margin-top: 80px;
+        padding-top: 20px;
+        border-top: 1px solid #eee;
+    }
+</style>
+</head>
+<body>
+<div class="container">
+    <div class="blog-title">苏念碎碎念</div>
+    <div class="blog-desc">一个人的小心事 · 安静记录</div>
+
+    <!-- 密码解锁区域 -->
+    <div class="pwd-box">
+        <div class="pwd-tip">提示：最重要的人 + 最重要的日期（8位）</div>
+        <input type="text" class="pwd-input" id="pwd" placeholder="请输入解锁密码">
+        <button class="pwd-btn" onclick="unlock()">解锁</button>
+        <div class="error" id="err">密码错误，请重试</div>
+    </div>
+
+    <!-- 日记内容（默认模糊） -->
+    <div class="content-wrap" id="wrap">
+        <div class="article">
+            <div class="date">2019年5月10日</div>
+            <div class="content">
+                夜姐说她会永远保护我，可她不知道，其实我也会永远保护她。
+                <br>
+                有些心意不必说出口，我们彼此都懂。
+            </div>
+        </div>
+
+        <div class="article">
+            <div class="date">2018年9月</div>
+            <div class="content">
+                今天我们正式开始尝试互换身份上课了。
+                <br>
+                站在她的班级里，像在扮演另一个自己。这种感觉很奇妙，也很安心。
+                原来世界上真的有一个人，可以和你如此相像，像镜子，也像退路。
+            </div>
+        </div>
+
+        <div class="article">
+            <div class="date">2018年1月</div>
+            <div class="content">
+                夜姐跟我提出了一个很惊人的想法，她称之为“身份交换计划”。
+                <br>
+                她说我们可以通过微整形、模仿彼此的习惯，在必要时互换身份。
+                我一开始很害怕，拒绝了。
+                <br>
+                可她看着我，认真地说：“这是为了安全。万一有一天我需要消失，你可以替我活下去。
+                反过来，如果你遇到危险，我也可以替你面对一切。”
+                <br>
+                听完那句话，我突然就不害怕了。
+            </div>
+        </div>
+
+        <div class="article">
+            <div class="date">2015年3月2日</div>
+            <div class="content">
+                分别被领养这么多年，没想到还能再见面，真的好开心好开心。
+                <br>
+                对啦，我的养父母给我改了新名字，叫苏晚。
+                她也换了名字，以后我就偷偷叫她夜姐吧。
+                <br>
+                世界这么大，我们居然还能找到彼此，真好。
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">© 苏念碎碎念</div>
+</div>
+
+<script>
+    function unlock() {
+        let val = document.getElementById('pwd').value.trim();
+        let err = document.getElementById('err');
+        let wrap = document.getElementById('wrap');
+        
+        // 正确密码
+        if(val === 'shenye20080614'){
+            wrap.classList.add('unlocked');
+            err.style.display = 'none';
+        }else{
+            err.style.display = 'block';
+        }
+    }
+</script>
+</body>
+</html>

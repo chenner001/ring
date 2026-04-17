@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>兰溪大学论坛 - 校园交流区</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: "Microsoft YaHei", sans-serif;
+            background: #f2f2f2;
+            color: #333;
+        }
+
+        .header {
+            background: #254a99;
+            color: #fff;
+            padding: 15px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo {
+            font-size: 20px;
+            font-weight: bold;
+        }
+        .login-btn {
+            font-size: 14px;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .user-info {
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        .username {
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .user-page-btn {
+            font-size: 14px;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .tip {
+            font-size: 12px;
+            color: #fffa;
+            margin-top: 4px;
+        }
+
+        .modal {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+        .login-box {
+            background: #fff;
+            width: 340px;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.2);
+        }
+        .login-title {
+            font-size: 18px;
+            font-weight: bold;
+            text-align: center;
+            margin-bottom: 20px;
+            color: #254a99;
+        }
+        .input-item {
+            margin-bottom: 15px;
+        }
+        .input-item label {
+            display: block;
+            font-size: 14px;
+            margin-bottom: 6px;
+        }
+        .input-item input {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        .error-tip {
+            color: #e63946;
+            font-size: 12px;
+            text-align: center;
+            margin-bottom: 10px;
+            display: none;
+        }
+        .login-submit {
+            width: 100%;
+            padding: 10px;
+            background: #254a99;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 15px;
+            margin-top: 10px;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 30px auto;
+            background: #fff;
+            border-radius: 6px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        .forum-title {
+            padding: 15px 20px;
+            background: #f8f9fa;
+            border-bottom: 1px solid #eee;
+            font-size: 16px;
+            font-weight: bold;
+            color: #254a99;
+        }
+        .post {
+            padding: 18px 22px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .post-title {
+            font-size: 15px;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #222;
+        }
+        .post-content {
+            font-size: 14px;
+            line-height: 1.6;
+            color: #444;
+        }
+        .post-meta {
+            font-size: 12px;
+            color: #999;
+            margin-top: 8px;
+        }
+        .comment-section {
+            margin-top: 12px;
+            padding-top: 10px;
+            border-top: 1px dashed #eaeaea;
+        }
+        .comment-item {
+            font-size: 13px;
+            color: #555;
+            margin-bottom: 8px;
+            background: #f9f9f9;
+            padding: 6px 10px;
+            border-radius: 6px;
+        }
+        .comment-author {
+            font-weight: bold;
+            color: #254a99;
+            margin-right: 8px;
+        }
+        .comment-time {
+            font-size: 11px;
+            color: #aaa;
+        }
+        .reply-box {
+            margin-top: 10px;
+            display: flex;
+            gap: 8px;
+        }
+        .reply-input {
+            flex: 1;
+            padding: 6px 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 12px;
+        }
+        .reply-btn {
+            background: #e9ecef;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 12px;
+        }
+        .reply-btn:hover {
+            background: #dee2e6;
+        }
+
+        .user-page {
+            display: none;
+            max-width: 900px;
+            margin: 30px auto;
+            background: #fff;
+            padding: 30px;
+            border-radius: 6px;
+        }
+        .user-title {
+            font-size: 20px;
+            font-weight: bold;
+            color: #254a99;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+        }
+        .user-post {
+            padding: 15px;
+            background: #fefaf5;
+            border: 1px solid #ffe4b5;
+            border-radius: 6px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .user-post:hover {
+            background: #fef0e0;
+        }
+        .deleted-post {
+            padding: 15px;
+            background: #fff5f5;
+            border: 1px solid #ffcccc;
+            border-radius: 6px;
+            color: #c93f3f;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .deleted-post:hover {
+            background: #ffe0e0;
+        }
+        .user-post-title {
+            font-weight: bold;
+            margin-bottom: 6px;
+            color: #222;
+        }
+        .user-post-content {
+            font-size: 13px;
+            color: #555;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 20px;
+            font-size: 12px;
+            color: #666;
+        }
+
+        /* 全局提示浮层 */
+        .global-toast {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0,0,0,0.75);
+            color: #fff;
+            padding: 8px 18px;
+            border-radius: 30px;
+            font-size: 13px;
+            z-index: 2000;
+            pointer-events: none;
+            opacity: 0;
+            transition: opacity 0.2s;
+            white-space: nowrap;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <div class="logo">兰溪大学论坛 · 校园交流区</div>
+    <div id="loginArea">
+        <div class="login-btn" onclick="showLogin()">用户登录</div>
+        <div class="tip">账号：学号 | 初始密码：8位生日</div>
+    </div>
+    <div class="user-info" id="userInfo">
+        <div class="username">陆鸣</div>
+        <div class="user-page-btn" onclick="goUserPage()">个人主页</div>
+    </div>
+</div>
+
+<div class="modal" id="loginModal">
+    <div class="login-box">
+        <div class="login-title">账号登录</div>
+        <div class="error-tip" id="errorTip">账号或密码错误，请重新输入！</div>
+        <div class="input-item">
+            <label>学号账号</label>
+            <input type="text" id="username" placeholder="请输入学号">
+        </div>
+        <div class="input-item">
+            <label>登录密码</label>
+            <input type="password" id="password" placeholder="请输入8位生日密码">
+        </div>
+        <button class="login-submit" onclick="checkLogin()">登录</button>
+    </div>
+</div>
+
+<!-- 论坛主页面 -->
+<div class="container" id="forumPage">
+    <div class="forum-title">校园热议 · 最新帖子</div>
+
+    <div class="post">
+        <div class="post-title">【求助】图书馆四楼的空调是不是坏了？热死了</div>
+        <div class="post-content">今天去图书馆自习，四楼简直像蒸笼，有同学知道报修电话吗？</div>
+        <div class="post-meta">小明同学 · 2019-05-09</div>
+        <div class="comment-section">
+            <div class="comment-item"><span class="comment-author">路人甲</span> 同感，三楼还好，四楼完全没风。<span class="comment-time"> 05-09 15:23</span></div>
+            <div class="comment-item"><span class="comment-author">后勤助理</span> 已反馈维修部，预计明天处理。<span class="comment-time"> 05-09 16:10</span></div>
+            <div class="reply-box"><input class="reply-input" placeholder="写评论..."><button class="reply-btn">回复</button></div>
+        </div>
+    </div>
+
+    <div class="post">
+        <div class="post-title">【爆料】陆鸣同学再次在校内打人，受害者为苏晚</div>
+        <div class="post-content">陆鸣今天又在校园里动手伤人了，被打的是同班同学苏晚，目击者称他当场踹了苏晚好几脚，行为十分恶劣。</div>
+        <div class="post-meta">匿名网友 · 2019-05-10</div>
+        <div class="comment-section">
+            <div class="comment-item"><span class="comment-author">正义使者</span> 太过分了，学校不管吗？<span class="comment-time"> 05-10 10:15</span></div>
+            <div class="comment-item"><span class="comment-author">吃瓜群众</span> 陆鸣家里有钱，估计又是不了了之。<span class="comment-time"> 05-10 11:02</span></div>
+            <div class="reply-box"><input class="reply-input" placeholder="写评论..."><button class="reply-btn">回复</button></div>
+        </div>
+    </div>
+
+    <div class="post">
+        <div class="post-title">【推荐】后门新开的烧烤摊，味道绝了！</div>
+        <div class="post-content">推荐大家去尝尝，烤茄子特别好吃，晚上宵夜好去处。</div>
+        <div class="post-meta">吃货小张 · 2019-05-10</div>
+        <div class="comment-section">
+            <div class="comment-item"><span class="comment-author">夜猫子</span> 昨晚刚去过，烤串不错，就是有点咸。<span class="comment-time"> 05-10 20:30</span></div>
+            <div class="comment-item"><span class="comment-author">减肥中</span> 诱惑啊，考完试就去！<span class="comment-time"> 05-11 08:12</span></div>
+            <div class="reply-box"><input class="reply-input" placeholder="写评论..."><button class="reply-btn">回复</button></div>
+        </div>
+    </div>
+
+    <div class="post">
+        <div class="post-title">【关注】苏晚同学身上出现多处明显淤青</div>
+        <div class="post-content">最近看到苏晚的手臂和腿部有多处淤青，看着很让人心疼，应该是遭受了暴力对待，希望学校能尽快介入处理。</div>
+        <div class="post-meta">匿名网友 · 2019-05-11</div>
+        <div class="comment-section">
+            <div class="comment-item"><span class="comment-author">热心学姐</span> 苏晚性格太软弱了，希望有人能帮她。<span class="comment-time"> 05-11 09:45</span></div>
+            <div class="comment-item"><span class="comment-author">学生会干事</span> 已记录，将向辅导员反映。<span class="comment-time"> 05-11 10:30</span></div>
+            <div class="reply-box"><input class="reply-input" placeholder="写评论..."><button class="reply-btn">回复</button></div>
+        </div>
+    </div>
+
+    <div class="post">
+        <div class="post-title">【选修课避雷】千万别选王老师的《西方哲学史》</div>
+        <div class="post-content">点名严格，期末考试还超难，挂科率太高了，学长学姐的血泪教训。</div>
+        <div class="post-meta">大三学长 · 2019-05-11</div>
+        <div class="comment-section">
+            <div class="comment-item"><span class="comment-author">学渣一枚</span> 已经选了，看到晚了😭<span class="comment-time"> 05-11 14:20</span></div>
+            <div class="comment-item"><span class="comment-author">学霸</span> 其实认真学还是能过的，老师给分不低。<span class="comment-time"> 05-11 15:05</span></div>
+            <div class="reply-box"><input class="reply-input" placeholder="写评论..."><button class="reply-btn">回复</button></div>
+        </div>
+    </div>
+
+    <div class="post">
+        <div class="post-title">【突发】沈夜为苏晚出头，与陆鸣在操场正面对峙</div>
+        <div class="post-content">刚刚在操场看到沈夜站出来为苏晚出头，和陆鸣发生激烈对峙，陆鸣当场放狠话，扬言要让沈夜付出代价。</div>
+        <div class="post-meta">匿名网友 · 2019-05-11</div>
+        <div class="comment-section">
+            <div class="comment-item"><span class="comment-author">吃瓜路人</span> 沈夜好刚，支持她！<span class="comment-time"> 05-11 17:40</span></div>
+            <div class="comment-item"><span class="comment-author">校报记者</span> 陆鸣太嚣张了，迟早出事。<span class="comment-time"> 05-11 18:15</span></div>
+            <div class="reply-box"><input class="reply-input" placeholder="写评论..."><button class="reply-btn">回复</button></div>
+        </div>
+    </div>
+
+    <div class="post">
+        <div class="post-title">【失物招领】食堂捡到一本柏拉图的《理想国》</div>
+        <div class="post-content">失主请联系我，封面写着“沈夜”。</div>
+        <div class="post-meta">好心同学 · 2019-05-11</div>
+        <div class="comment-section">
+            <div class="comment-item"><span class="comment-author">沈夜</span> 是我的，谢谢！已私信。<span class="comment-time"> 05-11 19:00</span></div>
+            <div class="reply-box"><input class="reply-input" placeholder="写评论..."><button class="reply-btn">回复</button></div>
+        </div>
+    </div>
+
+    <div class="post">
+        <div class="post-title">【好奇】没人觉得苏晚和沈夜长得特别像吗？</div>
+        <div class="post-content">一直觉得苏晚和沈夜两个人的五官、气质都特别相似，有时候远远看去几乎像亲人一样，不知道大家有没有这种感觉？</div>
+        <div class="post-meta">匿名网友 · 2019-05-11</div>
+        <div class="comment-section">
+            <div class="comment-item"><span class="comment-author">侦探迷</span> 我也发现了！会不会是失散多年的姐妹？<span class="comment-time"> 05-11 20:30</span></div>
+            <div class="comment-item"><span class="comment-author">知情人</span> 听说她们以前是同一个福利院的。<span class="comment-time"> 05-11 21:15</span></div>
+            <div class="reply-box"><input class="reply-input" placeholder="写评论..."><button class="reply-btn">回复</button></div>
+        </div>
+    </div>
+</div>
+
+<!-- 陆鸣个人主页 -->
+<div class="user-page" id="userPage">
+    <div class="user-title">陆鸣 个人主页</div>
+    
+    <div class="user-post" onclick="openWeixin()">
+        <div class="user-post-title">【约战帖】沈夜，明天晚上城南废弃工厂，单挑！</div>
+        <div class="user-post-content">你不是爱替人出头吗？敢来就别怂。</div>
+    </div>
+    <div class="user-post" onclick="showToast('该帖子已删除或不可见')">
+        <div class="user-post-title">炫耀新入手的AJ限量款</div>
+        <div class="user-post-content">老爹刚给买的，全校估计就我这一双。</div>
+    </div>
+    <div class="user-post" onclick="showToast('该帖子已删除或不可见')">
+        <div class="user-post-title">吐槽教务处的傻X规定</div>
+        <div class="user-post-content">晚自习必须打卡？老子才不去。</div>
+    </div>
+    <div class="user-post" onclick="showToast('该帖子已删除或不可见')">
+        <div class="user-post-title">今天又把一个多管闲事的家伙怼了</div>
+        <div class="user-post-content">有些人就是欠教训，我爸说了，在学校没人敢动我。</div>
+    </div>
+    <div class="deleted-post" onclick="openWeixin()">
+        <strong>【已删除帖子】</strong> 约战沈夜：明天晚上城南废弃工厂，单挑！（已恢复链接）
+    </div>
+</div>
+
+<div class="footer">
+    兰溪大学论坛 © 校园内部交流平台
+</div>
+
+<!-- 全局提示浮层 -->
+<div id="globalToast" class="global-toast"></div>
+
+<script>
+    // 显示页面内提示（非弹窗）
+    function showToast(msg, duration = 2000) {
+        const toast = document.getElementById('globalToast');
+        toast.textContent = msg;
+        toast.style.opacity = '1';
+        setTimeout(() => {
+            toast.style.opacity = '0';
+        }, duration);
+    }
+
+    // 打开微信聊天页面（新标签页）
+    function openWeixin() {
+        window.open('weixin.html', '_blank');
+    }
+
+    // 登录相关
+    function showLogin() {
+        document.getElementById('loginModal').style.display = 'flex';
+        document.getElementById('errorTip').style.display = 'none';
+    }
+
+    function checkLogin() {
+        let user = document.getElementById('username').value.trim();
+        let pwd = document.getElementById('password').value.trim();
+        
+        if(user === '2018-337' && pwd === '19980209'){
+            document.getElementById('loginModal').style.display = 'none';
+            document.getElementById('loginArea').style.display = 'none';
+            document.getElementById('userInfo').style.display = 'flex';
+            showToast('登录成功，欢迎回来');
+        } else {
+            document.getElementById('errorTip').style.display = 'block';
+        }
+    }
+
+    function goUserPage() {
+        document.getElementById('forumPage').style.display = 'none';
+        document.getElementById('userPage').style.display = 'block';
+    }
+
+    // 回复功能：使用页面内提示，无alert
+    document.querySelectorAll('.reply-btn').forEach(btn => {
+        btn.addEventListener('click', function(e) {
+            let input = this.previousElementSibling;
+            let comment = input.value.trim();
+            if (comment) {
+                let newComment = document.createElement('div');
+                newComment.className = 'comment-item';
+                newComment.innerHTML = `<span class="comment-author">当前用户</span> ${comment} <span class="comment-time"> 刚刚</span>`;
+                let section = this.parentElement.parentElement;
+                let replyBox = this.parentElement;
+                section.insertBefore(newComment, replyBox);
+                input.value = '';
+                showToast('评论发布成功');
+            } else {
+                showToast('请输入评论内容');
+            }
+        });
+    });
+</script>
+</body>
+</html>
