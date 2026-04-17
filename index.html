@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>刻痕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* 页面背景：深色木纹/旧桌面 */
+        body {
+            background-color: #2b2118;
+            background-image:
+                radial-gradient(circle at 20% 30%, rgba(25,15,5,0.5) 2%, transparent 2.5%),
+                radial-gradient(circle at 80% 70%, rgba(20,10,0,0.4) 1.5%, transparent 2%);
+            background-size: 60px 60px 50px 50px;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 3rem 1rem;
+            font-family: "KaiTi", "楷体", "SimSun", "宋体", serif;
+        }
+
+        /* 主卷宗容器：仿古纸张质感 */
+        .dossier {
+            width: 100%;
+            max-width: 960px;
+            background-color: #f3ecd9;
+            background-image:
+                linear-gradient(to right, rgba(0,0,0,0.015) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(0,0,0,0.015) 1px, transparent 1px);
+            background-size: 25px 25px;
+            border: 1px solid #96714b;
+            padding: 3rem 3.5rem;
+            position: relative;
+            box-shadow:
+                0 0 0 1px rgba(100,70,40,0.2),
+                15px 15px 30px rgba(0,0,0,0.4),
+                0 0 100px rgba(80,50,20,0.15) inset;
+            filter: sepia(10%);
+            line-height: 1.7;
+            color: #22180b;
+        }
+
+        /* 顶部卷宗号 */
+        .dossier-header {
+            text-align: center;
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            font-weight: bold;
+            color: #3d2816;
+        }
+
+        /* 标题 */
+        .dossier-title {
+            text-align: center;
+            font-size: 1.8rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            letter-spacing: 2px;
+            color: #1f1307;
+        }
+
+        /* 档案信息栏 */
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 1rem 2rem;
+            border-top: 1px solid #a07a4f;
+            border-bottom: 1px solid #a07a4f;
+            padding: 0.8rem 0;
+            margin-bottom: 2rem;
+            font-size: 0.95rem;
+        }
+
+        /* 章节标题 */
+        .section {
+            margin-bottom: 1.8rem;
+        }
+        .section-heading {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.8rem;
+            padding-left: 0.5rem;
+            border-left: 4px solid #8b5a2b;
+        }
+
+        /* 正文段落 */
+        .paragraph {
+            text-align: justify;
+            text-indent: 2em;
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        /* 表格样式 */
+        .data-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0 1.5rem;
+            background: #f8f0e0;
+        }
+        .data-table th,
+        .data-table td {
+            border: 1px solid #b99366;
+            padding: 0.7rem 1rem;
+            vertical-align: top;
+        }
+        .data-table th {
+            background-color: #e4d3b8;
+            font-weight: bold;
+            width: 28%;
+        }
+
+        /* 列表 */
+        .item-list {
+            list-style: none;
+            padding-left: 1rem;
+        }
+        .item-list li {
+            margin-bottom: 0.6rem;
+            position: relative;
+            padding-left: 1.2rem;
+        }
+        .item-list li::before {
+            content: "—";
+            position: absolute;
+            left: 0;
+            color: #8b5a2b;
+            font-weight: bold;
+        }
+
+        /* 红色印章样式 */
+        .seal {
+            position: absolute;
+            width: 90px;
+            height: 90px;
+            border: 2px solid #b72424;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #b72424;
+            font-size: 1.5rem;
+            font-weight: bold;
+            letter-spacing: 3px;
+            transform: rotate(-15deg);
+            opacity: 0.85;
+            pointer-events: none;
+            box-shadow: 0 0 4px rgba(180,0,0,0.3);
+        }
+        .seal-mi {
+            top: 3rem;
+            right: 3rem;
+        }
+        /* 左下角归档印章改为可点击 */
+        .seal-guidang {
+            bottom: 5rem;
+            left: 4rem;
+            cursor: pointer;
+            pointer-events: auto;
+            transition: transform 0.2s, opacity 0.2s;
+        }
+        .seal-guidang:hover {
+            transform: rotate(-15deg) scale(1.05);
+            opacity: 1;
+            box-shadow: 0 0 12px rgba(180,0,0,0.5);
+        }
+
+        /* 接收档案 - 红色印章按钮 */
+        .receive-btn-seal {
+            position: absolute;
+            right: 3.5rem;
+            bottom: 7rem;
+            width: 100px;
+            height: 100px;
+            border: 3px solid #c92a2a;
+            border-radius: 50%;
+            background: transparent;
+            color: #c92a2a;
+            font-size: 1.1rem;
+            font-weight: bold;
+            font-family: "KaiTi", "楷体", serif;
+            letter-spacing: 2px;
+            transform: rotate(10deg);
+            cursor: pointer;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 6px rgba(180,0,0,0.4);
+            transition: all 0.2s ease;
+            text-shadow: 0 0 1px rgba(180,0,0,0.3);
+        }
+        .receive-btn-seal:hover {
+            transform: rotate(10deg) scale(1.05);
+            opacity: 1;
+            box-shadow: 0 0 10px rgba(180,0,0,0.5);
+        }
+
+        /* 底部归档信息 */
+        .footer {
+            margin-top: 3rem;
+            padding-top: 1.5rem;
+            border-top: 1px solid #a07a4f;
+            text-align: right;
+            font-size: 0.9rem;
+            color: #4d351e;
+        }
+
+        /* 模态框样式 (古风卷轴) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(30, 20, 10, 0.7);
+            backdrop-filter: blur(3px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 2000;
+            font-family: "KaiTi", "楷体", serif;
+        }
+        .modal-content {
+            background: #fef7e8;
+            background-image: linear-gradient(to bottom, #fcf3e0, #f5e8d0);
+            width: 480px;
+            max-width: 85vw;
+            border: 2px solid #b07d48;
+            box-shadow: 0 20px 35px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,245,215,0.8);
+            padding: 2rem 2rem 2rem 2rem;
+            position: relative;
+            text-align: center;
+        }
+        .modal-content::before {
+            content: "";
+            position: absolute;
+            top: 8px;
+            left: 8px;
+            right: 8px;
+            bottom: 8px;
+            border: 1px solid #dabc8c;
+            pointer-events: none;
+        }
+        .modal-title {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #8b3c1c;
+            margin-bottom: 1.5rem;
+            letter-spacing: 4px;
+        }
+        .modal-message {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #2c1e12;
+            margin: 1rem 0;
+            text-align: left;
+        }
+        .modal-message p {
+            margin-bottom: 0.8rem;
+        }
+        .modal-close {
+            margin-top: 1.5rem;
+            padding: 0.5rem 1.5rem;
+            background: #8b5a2b;
+            border: none;
+            color: #fef0db;
+            font-family: "KaiTi", "楷体", serif;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.1s;
+            letter-spacing: 1px;
+        }
+        .modal-close:hover {
+            background: #a56e38;
+        }
+
+        /* 响应式 */
+        @media (max-width: 768px) {
+            .dossier {
+                padding: 2rem 1.5rem;
+            }
+            .seal, .receive-btn-seal {
+                width: 70px;
+                height: 70px;
+                font-size: 1rem;
+            }
+            .info-bar {
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            .receive-btn-seal {
+                right: 1.5rem;
+                bottom: 8rem;
+            }
+            .seal-guidang {
+                bottom: 6rem;
+                left: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="dossier">
+    <!-- 卷宗号 -->
+    <div class="dossier-header">卷宗号：2026-04-16-001</div>
+
+    <!-- 标题 -->
+    <h1 class="dossier-title">案件现场勘查档案</h1>
+    <div class="dossier-header" style="margin-bottom:1.5rem;">城南河道无名女尸案</div>
+
+    <!-- 档案信息 -->
+    <div class="info-bar">
+        <span>责任者：法医物证科</span>
+        <span>勘查日期：2026年4月16日</span>
+        <span>密级：内部·调查中</span>
+    </div>
+
+    <!-- 一、发现经过 -->
+    <div class="section">
+        <div class="section-heading">一、发现经过</div>
+        <p class="paragraph">
+            2026年4月16日凌晨4时17分，城南河道清淤作业人员在作业区内发现一具被密封于铁桶内的女性尸体。当时晨雾未散，河面平静，清淤吊车打捞出水泥封口铁桶，桶壁开裂，切割后发现人体组织，随即报警并保护现场。
+        </p>
+        <p class="paragraph">
+           现场无身份证明、无随身物品、无明显打斗痕迹。法医及刑侦人员到场后，对尸体、铁桶、附着物进行提取固定，尸体已转运至解剖室，周边区域未发现其他关联物证。
+        </p>
+    </div>
+
+    <!-- 二、尸体初步检验 -->
+    <div class="section">
+        <div class="section-heading">二、尸体初步检验记录</div>
+        <table class="data-table">
+            <tr>
+                <th>项目</th>
+                <th>检验结果</th>
+            </tr>
+            <tr>
+                <td>性别</td>
+                <td>女性（初步判定）</td>
+            </tr>
+            <tr>
+                <td>年龄</td>
+                <td>待实验室检测（面部高度腐败无法辨认）</td>
+            </tr>
+            <tr>
+                <td>腐败程度</td>
+                <td>高度腐败，面部特征完全消失</td>
+            </tr>
+            <tr>
+                <td>衣物</td>
+                <td>躯体粘连暗红色衣物残片，无法辨认款式</td>
+            </tr>
+            <tr>
+                <td>体表特征</td>
+                <td>右手食指佩戴银色戒指一枚，内侧刻有字母“SS”；戒指下方有陈旧疤痕；疤痕旁有飞鸟状纹身，覆盖部分疤痕区域。</td>
+            </tr>
+            <tr>
+                <td>其他</td>
+                <td>未见明显骨折、锐器创或枪弹痕迹，需进一步解剖确认死因</td>
+            </tr>
+        </table>
+    </div>
+
+    <!-- 三、物证提取 -->
+    <div class="section">
+        <div class="section-heading">三、现场物证提取清单</div>
+        <ul class="item-list">
+            <li>银色戒指1枚（内侧刻字“SS”），已拍照封装，待送检。</li>
+            <li>暗红色衣物残片若干，已取样封存。</li>
+            <li>铁桶内壁附着物、水泥残渣，已刮取送检。</li>
+            <li>飞鸟纹身及疤痕区域高清影像、拓片记录。</li>
+            <li>铁桶外部密封层、裂缝结构样本。</li>
+        </ul>
+    </div>
+
+    <!-- 四、现场影像记录 -->
+    <div class="section">
+        <div class="section-heading">四、现场影像记录</div>
+        <p class="paragraph">
+            本次勘查共拍摄现场影像4份，包括铁桶整体、尸体手部特征、衣物残片、水泥裂缝等关键部位，全部归档保存，作为案件调查依据。
+        </p>
+    </div>
+
+    <!-- 接收档案 - 红色印章按钮 -->
+    <button class="receive-btn-seal" onclick="window.open('zhuomian.html','_blank')">接收<br>档案</button>
+
+    <!-- 红色印章（左下角归档印章改为可点击） -->
+    <div class="seal seal-mi">密</div>
+    <div class="seal seal-guidang" id="archiveSeal">归档</div>
+
+    <!-- 底部归档信息 -->
+    <div class="footer">
+        建档人：法医物证科<br>
+        归档时间：2026年4月16日<br>
+        电子档案副本 · 原始卷宗存档
+    </div>
+</div>
+
+<script>
+    // 创建模态框函数（古风弹窗）
+    function showAuthorMessage() {
+        // 如果已有模态框则移除
+        const existingModal = document.querySelector('.modal-overlay');
+        if (existingModal) existingModal.remove();
+
+        const overlay = document.createElement('div');
+        overlay.className = 'modal-overlay';
+        overlay.innerHTML = `
+            <div class="modal-content">
+                <div class="modal-title">作者的话</div>
+                <div class="modal-message">
+                    <p>1. 谢谢你们玩我的游戏。</p>
+                    <p>2. 搜索词要在浏览器初始界面搜索。</p>
+                    <p>3. 联系我：小红书 @Romonosovp</p>
+                </div>
+                <button class="modal-close">知悉</button>
+            </div>
+        `;
+        document.body.appendChild(overlay);
+
+        // 关闭模态框
+        const closeBtn = overlay.querySelector('.modal-close');
+        closeBtn.addEventListener('click', () => {
+            overlay.remove();
+        });
+        // 点击背景也可关闭
+        overlay.addEventListener('click', (e) => {
+            if (e.target === overlay) overlay.remove();
+        });
+    }
+
+    // 为左下角归档印章添加点击事件
+    const archiveSeal = document.getElementById('archiveSeal');
+    if (archiveSeal) {
+        archiveSeal.addEventListener('click', showAuthorMessage);
+    }
+</script>
+</body>
+</html>
