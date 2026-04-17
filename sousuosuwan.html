@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cococola Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-bar {
+            width: 100%;
+            height: 40px;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .http-prefix {
+            color: #5f6368;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+
+        .address-input {
+            flex: 1;
+            height: 28px;
+            border: none;
+            outline: none;
+            background-color: white;
+            border-radius: 14px;
+            padding: 0 12px;
+            font-size: 14px;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            margin-top: 80px;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 6rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            letter-spacing: -5px;
+        }
+
+        .red {
+            color: #e60028;
+        }
+
+        .black {
+            color: #000000;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 580px;
+            position: relative;
+            margin-bottom: 30px;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 46px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            padding: 0 20px;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.1);
+        }
+
+        .results {
+            width: 100%;
+            max-width: 650px;
+            margin: 0 auto;
+            text-align: left;
+        }
+
+        .result-item {
+            background: #ffffff;
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            padding: 16px 20px;
+            margin-bottom: 16px;
+            transition: box-shadow 0.2s;
+            cursor: pointer;
+        }
+
+        .result-item:hover {
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            background: #fafafa;
+        }
+
+        .result-title {
+            font-size: 18px;
+            font-weight: 500;
+            color: #1a0dab;
+            margin-bottom: 6px;
+        }
+
+        .result-url {
+            font-size: 13px;
+            color: #006621;
+            margin-bottom: 6px;
+        }
+
+        .result-snippet {
+            font-size: 14px;
+            color: #4d5156;
+            line-height: 1.4;
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            color: #5f6368;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <span class="http-prefix">http://</span>
+        <input type="text" class="address-input" id="addressBar" placeholder="www.cococolasearch.com">
+    </div>
+
+    <div class="container">
+        <div class="logo">
+            <span class="red">c</span>
+            <span class="black">o</span>
+            <span class="red">c</span>
+            <span class="black">o</span>
+            <span class="red">c</span>
+            <span class="black">ola</span>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="在cococola搜索">
+        </div>
+
+        <div class="results">
+            <!-- 第一条：2019年失踪新闻，不涉及现在 -->
+            <div class="result-item" id="resultNews">
+                <div class="result-title">苏晚于2019年5月14日失踪 警方发布协查通报</div>
+                <div class="result-url">https://news.lanxi.gov.cn/2019/suwan_missing</div>
+                <div class="result-snippet">兰溪市警方通报：苏晚（女，1999年出生）于2019年5月14日失联。最后出现在城南公交站，身穿红色连衣裙。如有线索请与警方联系。</div>
+            </div>
+            <!-- 第二条：苏晚微博 -->
+            <div class="result-item" id="resultWeibo">
+                <div class="result-title">苏晚的微博</div>
+                <div class="result-url">https://weibo.com/suwan/profile</div>
+                <div class="result-snippet">苏晚的微博主页。</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>© 2026 cococola Search</footer>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const addressBar = document.getElementById('addressBar');
+
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                console.log('搜索关键词:', this.value.trim());
+            }
+        });
+
+        addressBar.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                console.log('地址栏输入:', this.value.trim());
+            }
+        });
+
+        const newsItem = document.getElementById('resultNews');
+        const weiboItem = document.getElementById('resultWeibo');
+
+        newsItem.addEventListener('click', function() {
+            window.open('suwanshizong.html', '_blank');
+        });
+
+        weiboItem.addEventListener('click', function() {
+            window.open('suwanweibo.html', '_blank');
+        });
+    </script>
+</body>
+</html>

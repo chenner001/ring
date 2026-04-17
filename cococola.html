@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cococola Search</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background-color: #ffffff;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .top-bar {
+            width: 100%;
+            height: 40px;
+            background-color: #e0e0e0;
+            display: flex;
+            align-items: center;
+            padding: 0 15px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 100;
+        }
+
+        .http-prefix {
+            color: #5f6368;
+            font-size: 14px;
+            margin-right: 5px;
+        }
+
+        .address-input {
+            flex: 1;
+            height: 28px;
+            border: none;
+            outline: none;
+            background-color: white;
+            border-radius: 14px;
+            padding: 0 12px;
+            font-size: 14px;
+        }
+
+        .container {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 60px;
+            padding: 20px;
+        }
+
+        .logo {
+            font-size: 6rem;
+            font-weight: bold;
+            margin-bottom: 30px;
+            letter-spacing: -5px;
+        }
+
+        .red {
+            color: #e60028;
+        }
+
+        .black {
+            color: #000000;
+        }
+
+        .search-container {
+            width: 100%;
+            max-width: 580px;
+            position: relative;
+        }
+
+        .search-input {
+            width: 100%;
+            height: 46px;
+            border: 1px solid #dfe1e5;
+            border-radius: 24px;
+            padding: 0 20px;
+            font-size: 16px;
+            outline: none;
+            box-shadow: 0 1px 6px rgba(32, 33, 36, 0.1);
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            color: #5f6368;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="top-bar">
+        <span class="http-prefix">http://</span>
+        <input type="text" class="address-input" id="addressBar" placeholder="www.cococolasearch.com">
+    </div>
+
+    <div class="container">
+        <div class="logo">
+            <span class="red">c</span>
+            <span class="black">o</span>
+            <span class="red">c</span>
+            <span class="black">o</span>
+            <span class="red">c</span>
+            <span class="black">ola</span>
+        </div>
+
+        <div class="search-container">
+            <input type="text" class="search-input" id="searchInput" placeholder="在cococola搜索">
+        </div>
+    </div>
+
+    <footer>© 2026 cococola Search</footer>
+
+    <script>
+        const searchInput = document.getElementById('searchInput');
+        const addressBar = document.getElementById('addressBar');
+
+        // 关键词映射表（不区分大小写）
+        const keywordMap = {
+            "ss": "jewelry-card.html",
+            "苏晚": "sousuosuwan.html",
+            "沈夜": "shenyeweibo.html",
+            "沈清书": "news-shen.html",
+            "陆鸣": "luming.html",
+            "兰溪大学": "lanxidaxue.html",
+            "城南废弃工厂": "gongchang.html",
+            "林渡": "lindubaike.html",
+            "苏念": "sunian.html",
+            "兰溪市整形外科": "zhengxingwaike.html"
+            "光曦福利院": "sousuoguangxi.html"
+        };
+
+        // 搜索框回车事件
+        searchInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                const keyword = this.value.trim();
+                // 不区分大小写匹配
+                let matchedUrl = null;
+                // 先精确匹配（包括大小写不敏感）
+                for (let [key, url] of Object.entries(keywordMap)) {
+                    if (keyword.toLowerCase() === key.toLowerCase()) {
+                        matchedUrl = url;
+                        break;
+                    }
+                }
+                if (matchedUrl) {
+                    window.open(matchedUrl, '_blank');
+                } else {
+                    // 无匹配时，可控制台输出，不做跳转
+                    console.log('未找到匹配的关键词:', keyword);
+                }
+                // 清空输入框（可选）
+                // this.value = '';
+            }
+        });
+
+        // 地址栏回车不做跳转（保持UI一致）
+        addressBar.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                console.log('地址栏输入:', this.value.trim());
+            }
+        });
+    </script>
+</body>
+</html>

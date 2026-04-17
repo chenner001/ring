@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>小张</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        /* 手机容器 */
+        .phone {
+            width: 375px;
+            height: 700px;
+            background: #f5f5f5;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* 状态栏 */
+        .status-bar {
+            background: #ededed;
+            padding: 12px 16px 6px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            color: #1c1c1e;
+            font-family: monospace;
+        }
+
+        /* 聊天头部 */
+        .chat-header {
+            background: #ededed;
+            padding: 10px 16px;
+            border-bottom: 0.5px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .back-btn {
+            position: absolute;
+            left: 16px;
+            font-size: 24px;
+            font-weight: 300;
+            color: #007aff;
+            cursor: default;
+        }
+        .header-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1c1c1e;
+        }
+        .header-menu {
+            position: absolute;
+            right: 16px;
+            font-size: 20px;
+            color: #007aff;
+            cursor: default;
+        }
+
+        /* 聊天内容区域 */
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 12px 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(0,0,0,0.02) 2%, transparent 2.5%);
+            background-size: 28px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* 消息行 */
+        .message-row {
+            display: flex;
+            width: 100%;
+        }
+        .message-left {
+            justify-content: flex-start;
+        }
+        .message-right {
+            justify-content: flex-end;
+        }
+
+        /* 气泡 */
+        .bubble {
+            max-width: 70%;
+            padding: 10px 12px;
+            border-radius: 18px;
+            font-size: 15px;
+            line-height: 1.45;
+            position: relative;
+            word-wrap: break-word;
+        }
+        .bubble-left {
+            background-color: #ffffff;
+            color: #000000;
+            border: 0.5px solid #e5e5e5;
+            border-top-left-radius: 4px;
+        }
+        .bubble-right {
+            background-color: #dcf8c5;
+            color: #000000;
+            border-top-right-radius: 4px;
+        }
+        .message-time {
+            font-size: 10px;
+            color: #8e8e93;
+            margin-top: 4px;
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+        .time-left {
+            text-align: left;
+            margin-left: 12px;
+        }
+        .time-right {
+            text-align: right;
+            margin-right: 12px;
+        }
+
+        /* 底部输入栏模拟 */
+        .bottom-bar {
+            background: #f7f7f7;
+            padding: 8px 12px;
+            border-top: 0.5px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .voice-icon, .emoji-icon, .add-icon {
+            width: 28px;
+            height: 28px;
+            background: #d1d1d6;
+            border-radius: 50%;
+        }
+        .input-field {
+            flex: 1;
+            background: #ffffff;
+            border: 0.5px solid #e5e5ea;
+            border-radius: 18px;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #8e8e93;
+        }
+
+        /* 滚动条 */
+        .chat-area::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-area::-webkit-scrollbar-track {
+            background: #f0f0f0;
+        }
+        .chat-area::-webkit-scrollbar-thumb {
+            background: #c0c0c0;
+            border-radius: 4px;
+        }
+
+        /* 顶部新消息弹窗 (模拟iOS通知) */
+        .notification-banner {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(10px);
+            padding: 12px 16px;
+            transform: translateY(-100%);
+            transition: transform 0.3s ease-out;
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            border-bottom: 0.5px solid rgba(255,255,255,0.2);
+        }
+        .notification-banner.show {
+            transform: translateY(0);
+        }
+        .notification-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .notification-icon {
+            width: 32px;
+            height: 32px;
+            background: #34c759;
+            border-radius: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 14px;
+            font-weight: bold;
+        }
+        .notification-text {
+            color: white;
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .notification-close {
+            color: rgba(255,255,255,0.6);
+            font-size: 20px;
+            padding: 0 8px;
+        }
+    </style>
+</head>
+<body>
+<div class="phone">
+    <!-- 状态栏 -->
+    <div class="status-bar">
+        <span>9:41</span>
+        <span>📶 100%</span>
+    </div>
+
+    <!-- 聊天头部 -->
+    <div class="chat-header">
+        <div class="back-btn">←</div>
+        <div class="header-name">小张</div>
+        <div class="header-menu">⋯</div>
+    </div>
+
+    <!-- 聊天记录区域 -->
+    <div class="chat-area">
+        <!-- 第一条消息：小张（左侧） 内容：林法医，有驴友报警说在一个废弃矿洞里发现一具男尸 -->
+        <div class="message-row message-left">
+            <div class="bubble bubble-left">林法医，有驴友报警说在一个废弃矿洞里发现一具男尸</div>
+        </div>
+        <div class="message-time time-left">下午 4:23</div>
+
+        <!-- 第二条消息：小张（左侧） 内容：有一张纸条 -->
+        <div class="message-row message-left">
+            <div class="bubble bubble-left">有一张纸条</div>
+        </div>
+        <div class="message-time time-left">下午 4:23</div>
+
+        <!-- 第三条消息：小张（左侧） 内容：你杀了她，我杀了你，这很公平。 -->
+        <div class="message-row message-left">
+            <div class="bubble bubble-left">“你杀了她，我杀了你，这很公平。”</div>
+        </div>
+        <div class="message-time time-left">下午 4:24</div>
+
+        <!-- 第四条消息：小张（左侧） 内容：让你快去现场 -->
+        <div class="message-row message-left">
+            <div class="bubble bubble-left">让你快去现场</div>
+        </div>
+        <div class="message-time time-left">下午 4:24</div>
+
+        <!-- 第五条消息：林渡（右侧） 回复：马上到 -->
+        <div class="message-row message-right">
+            <div class="bubble bubble-right">马上到</div>
+        </div>
+        <div class="message-time time-right">下午 4:25</div>
+
+        <!-- 增加一个灰色系统提示，模拟真实感 -->
+        <div style="margin: 16px 0 8px; text-align: center;">
+            <span style="background: #e9e9ef; padding: 4px 12px; border-radius: 100px; font-size: 10px; color: #6c6c70;">以上是聊天记录</span>
+        </div>
+    </div>
+
+    <!-- 底部模拟输入栏（仅为还原微信样式） -->
+    <div class="bottom-bar">
+        <div class="voice-icon"></div>
+        <div class="input-field">发消息</div>
+        <div class="emoji-icon"></div>
+        <div class="add-icon"></div>
+    </div>
+
+    <!-- 顶部新消息弹窗 -->
+    <div id="notifyBanner" class="notification-banner">
+        <div class="notification-content">
+            <div class="notification-icon">微</div>
+            <div class="notification-text">王局</div>
+        </div>
+        <div class="notification-close">×</div>
+    </div>
+</div>
+
+<script>
+    const banner = document.getElementById('notifyBanner');
+    let timer = null;
+
+    // 3秒后显示弹窗
+    setTimeout(() => {
+        banner.classList.add('show');
+    }, 3000);
+
+    // 点击整个弹窗（除关闭按钮外）打开新标签页
+    banner.addEventListener('click', (e) => {
+        // 如果点击的是关闭按钮区域，不跳转，只关闭弹窗
+        if (e.target.classList.contains('notification-close')) {
+            banner.classList.remove('show');
+            return;
+        }
+        // 打开新标签页
+        window.open('wangju.html', '_blank');
+        // 可选：跳转后关闭弹窗
+        banner.classList.remove('show');
+    });
+</script>
+</body>
+</html>

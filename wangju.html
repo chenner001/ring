@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <title>王局</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #000000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        .phone {
+            width: 375px;
+            height: 700px;
+            background: #f5f5f5;
+            border-radius: 32px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .status-bar {
+            background: #ededed;
+            padding: 12px 16px 6px;
+            font-size: 14px;
+            font-weight: 600;
+            display: flex;
+            justify-content: space-between;
+            color: #1c1c1e;
+            font-family: monospace;
+        }
+
+        .chat-header {
+            background: #ededed;
+            padding: 10px 16px;
+            border-bottom: 0.5px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+        .back-btn {
+            position: absolute;
+            left: 16px;
+            font-size: 24px;
+            font-weight: 300;
+            color: #007aff;
+            cursor: default;
+        }
+        .header-name {
+            font-size: 17px;
+            font-weight: 600;
+            color: #1c1c1e;
+        }
+        .header-menu {
+            position: absolute;
+            right: 16px;
+            font-size: 20px;
+            color: #007aff;
+            cursor: default;
+        }
+
+        .chat-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 12px 20px;
+            background-image: radial-gradient(circle at 10% 20%, rgba(0,0,0,0.02) 2%, transparent 2.5%);
+            background-size: 28px 28px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .message-row {
+            display: flex;
+            width: 100%;
+        }
+        .message-left {
+            justify-content: flex-start;
+        }
+        .message-right {
+            justify-content: flex-end;
+        }
+
+        .bubble {
+            max-width: 70%;
+            padding: 10px 12px;
+            border-radius: 18px;
+            font-size: 15px;
+            line-height: 1.45;
+            word-wrap: break-word;
+        }
+        .bubble-left {
+            background-color: #ffffff;
+            color: #000000;
+            border: 0.5px solid #e5e5e5;
+            border-top-left-radius: 4px;
+        }
+        .bubble-right {
+            background-color: #dcf8c5;
+            color: #000000;
+            border-top-right-radius: 4px;
+        }
+
+        /* 文档卡片样式 */
+        .doc-card {
+            background: #ffffff;
+            border: 1px solid #e5e5ea;
+            border-radius: 12px;
+            margin: 8px 0 0 0;
+            padding: 12px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+        .doc-card:hover {
+            background: #f2f2f2;
+        }
+        .doc-icon {
+            width: 40px;
+            height: 48px;
+            background: #eef2f7;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: monospace;
+            font-size: 12px;
+            font-weight: bold;
+            color: #1a3b5c;
+            border: 1px solid #d0d7e3;
+        }
+        .doc-info {
+            flex: 1;
+        }
+        .doc-name {
+            font-size: 14px;
+            font-weight: 500;
+            color: #1c1c1e;
+        }
+        .doc-meta {
+            font-size: 11px;
+            color: #8e8e93;
+            margin-top: 4px;
+        }
+        .message-time {
+            font-size: 10px;
+            color: #8e8e93;
+            margin-top: 4px;
+            margin-left: 8px;
+            margin-right: 8px;
+        }
+        .time-left {
+            text-align: left;
+            margin-left: 12px;
+        }
+
+        .bottom-bar {
+            background: #f7f7f7;
+            padding: 8px 12px;
+            border-top: 0.5px solid #dbdbdb;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .voice-icon, .emoji-icon, .add-icon {
+            width: 28px;
+            height: 28px;
+            background: #d1d1d6;
+            border-radius: 50%;
+        }
+        .input-field {
+            flex: 1;
+            background: #ffffff;
+            border: 0.5px solid #e5e5ea;
+            border-radius: 18px;
+            padding: 8px 12px;
+            font-size: 14px;
+            color: #8e8e93;
+        }
+
+        .chat-area::-webkit-scrollbar {
+            width: 4px;
+        }
+        .chat-area::-webkit-scrollbar-track {
+            background: #f0f0f0;
+        }
+        .chat-area::-webkit-scrollbar-thumb {
+            background: #c0c0c0;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+<div class="phone">
+    <div class="status-bar">
+        <span>9:41</span>
+        <span>📶 100%</span>
+    </div>
+
+    <div class="chat-header">
+        <div class="back-btn">←</div>
+        <div class="header-name">王局</div>
+        <div class="header-menu">⋯</div>
+    </div>
+
+    <div class="chat-area">
+        <!-- 王局发送的消息 -->
+        <div class="message-row message-left">
+            <div class="bubble bubble-left">上边催得急 结案报告赶紧写</div>
+        </div>
+        <div class="message-time time-left">下午 5:12</div>
+
+        <!-- 结案报告文档预览卡片，点击打开 wenjuan.html -->
+        <div class="message-row message-left">
+            <div class="doc-card" id="docPreview">
+                <div class="doc-icon">DOC</div>
+                <div class="doc-info">
+                    <div class="doc-name">城南河道女尸案结案报告.doc</div>
+                    <div class="doc-meta">2026年4月17日 36KB</div>
+                </div>
+            </div>
+        </div>
+        <div class="message-time time-left">下午 5:12</div>
+
+        <!-- 灰色系统提示 -->
+        <div style="margin: 16px 0 8px; text-align: center;">
+            <span style="background: #e9e9ef; padding: 4px 12px; border-radius: 100px; font-size: 10px; color: #6c6c70;">以上是聊天记录</span>
+        </div>
+    </div>
+
+    <div class="bottom-bar">
+        <div class="voice-icon"></div>
+        <div class="input-field">发消息</div>
+        <div class="emoji-icon"></div>
+        <div class="add-icon"></div>
+    </div>
+</div>
+
+<script>
+    const docCard = document.getElementById('docPreview');
+    if (docCard) {
+        docCard.addEventListener('click', function() {
+            window.open('wenjuan.html', '_blank');
+        });
+    }
+</script>
+</body>
+</html>

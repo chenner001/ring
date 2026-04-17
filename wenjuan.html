@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>结案报告 · 城南河道女尸案调查结果</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background: #eef2f5;
+            font-family: '宋体', 'SimSun', 'Times New Roman', serif;
+            padding: 2rem 1.5rem;
+            color: #1a1e24;
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: #ffffff;
+            border: 1px solid #8a9bb0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .header {
+            background: #f0f2f5;
+            border-bottom: 1px solid #8a9bb0;
+            padding: 1rem 1.8rem;
+        }
+        .header h1 {
+            font-size: 1.5rem;
+            font-weight: normal;
+            letter-spacing: 1px;
+            color: #1a3b5c;
+        }
+        .sub {
+            font-size: 0.8rem;
+            color: #4a627a;
+            margin-top: 6px;
+        }
+
+        .questionnaire {
+            padding: 1.8rem;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: bold;
+            border-left: 4px solid #1a3b5c;
+            padding-left: 12px;
+            margin-bottom: 1.2rem;
+            color: #1e2f3d;
+        }
+
+        .question-item {
+            margin-bottom: 1.8rem;
+            border-bottom: 1px dashed #d0d7e3;
+            padding-bottom: 1rem;
+        }
+        .question-text {
+            font-weight: bold;
+            font-size: 1rem;
+            margin-bottom: 0.6rem;
+            color: #1f3b4c;
+        }
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            padding-left: 0.5rem;
+        }
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            font-size: 0.9rem;
+        }
+        .option input {
+            margin-right: 4px;
+            cursor: pointer;
+        }
+        .option label {
+            cursor: pointer;
+        }
+
+        .report-area {
+            background: #fafcfd;
+            border: 1px solid #cbdae6;
+            padding: 1.2rem 1.5rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .report-line {
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #1f2f3a;
+        }
+        .sign-line {
+            margin-top: 1.2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            border-top: 1px solid #b0c2d2;
+            padding-top: 1rem;
+            font-size: 0.9rem;
+        }
+        .sign-place {
+            font-family: 'Courier New', monospace;
+            min-width: 120px;
+            border-bottom: 1px solid #6c8eae;
+            padding: 0 8px;
+            font-weight: bold;
+            color: #1a3b5c;
+        }
+        .sign-label {
+            color: #4a627a;
+        }
+
+        .btn-area {
+            text-align: right;
+            margin-top: 1.5rem;
+        }
+        .sign-btn {
+            background: #1a3b5c;
+            border: none;
+            color: white;
+            font-size: 0.9rem;
+            padding: 0.5rem 1.8rem;
+            cursor: pointer;
+            font-family: '宋体', monospace;
+            transition: 0.1s linear;
+        }
+        .sign-btn:hover:not(:disabled) {
+            background: #2c5282;
+        }
+        .sign-btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .footer-note {
+            font-size: 0.7rem;
+            color: #7c8a9a;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            padding: 1rem;
+        }
+
+        .container, .header, .questionnaire, .report-area, .sign-btn {
+            border-radius: 0px;
+        }
+
+        @media (max-width: 650px) {
+            body {
+                padding: 1rem;
+            }
+            .questionnaire {
+                padding: 1.2rem;
+            }
+            .options {
+                gap: 0.8rem;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>兰溪市公安局 · 城南河道女尸案调查结果</h1>
+        <div class="sub">档案编号：2026-0417-01 | 内部专用</div>
+    </div>
+
+    <div class="questionnaire">
+        <div class="section-title">案件事实认定</div>
+
+        <!-- 问题1 -->
+        <div class="question-item">
+            <div class="question-text">问题1：女尸的真实身份？</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q1" value="苏晚"> A. 苏晚</label>
+                <label class="option"><input type="radio" name="q1" value="沈夜"> B. 沈夜</label>
+                <label class="option"><input type="radio" name="q1" value="陆鸣"> C. 陆鸣</label>
+            </div>
+        </div>
+
+        <!-- 问题2 -->
+        <div class="question-item">
+            <div class="question-text">问题2：苏晚的死因？</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q2" value="自杀"> A. 自杀</label>
+                <label class="option"><input type="radio" name="q2" value="被陆鸣误杀"> B. 被陆鸣误杀</label>
+                <label class="option"><input type="radio" name="q2" value="被沈夜所杀"> C. 被沈夜所杀</label>
+            </div>
+        </div>
+
+        <!-- 问题3 -->
+        <div class="question-item">
+            <div class="question-text">问题3：陆鸣的下落？</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q3" value="仍在逃"> A. 仍在逃</label>
+                <label class="option"><input type="radio" name="q3" value="被沈夜杀死，尸体藏匿"> B. 被沈夜杀死，尸体藏匿</label>
+                <label class="option"><input type="radio" name="q3" value="意外死亡"> C. 意外死亡</label>
+            </div>
+        </div>
+
+        <!-- 问题4 -->
+        <div class="question-item">
+            <div class="question-text">问题4：凶器上的指纹属于谁？</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q4" value="陆鸣"> A. 陆鸣</label>
+                <label class="option"><input type="radio" name="q4" value="苏晚"> B. 苏晚</label>
+                <label class="option"><input type="radio" name="q4" value="沈夜"> C. 沈夜</label>
+            </div>
+        </div>
+
+        <!-- 问题5 -->
+        <div class="question-item">
+            <div class="question-text">问题5：谁应该为这起案件负责？</div>
+            <div class="options">
+                <label class="option"><input type="radio" name="q5" value="陆鸣"> A. 陆鸣</label>
+                <label class="option"><input type="radio" name="q5" value="苏晚"> B. 苏晚</label>
+                <label class="option"><input type="radio" name="q5" value="沈夜"> C. 沈夜</label>
+                <label class="option"><input type="radio" name="q5" value="都是受害者"> D. 都是受害者</label>
+            </div>
+        </div>
+
+        <!-- 结案报告生成区域 -->
+        <div class="report-area">
+            <div class="report-line">结案报告已生成。请法医签字确认。</div>
+            <div class="sign-line">
+                <span class="sign-label">法医签字：</span>
+                <span class="sign-place" id="signatureSpan"></span>
+            </div>
+        </div>
+
+        <div class="btn-area">
+            <button class="sign-btn" id="signBtn">签字确认</button>
+        </div>
+    </div>
+
+    <div class="footer-note">
+        电子档案 · 签字后具有法律效力
+    </div>
+</div>
+
+<script>
+    const signBtn = document.getElementById('signBtn');
+    const signatureSpan = document.getElementById('signatureSpan');
+
+    // 检查所有题目是否已作答
+    function isAllQuestionsAnswered() {
+        const q1 = document.querySelector('input[name="q1"]:checked');
+        const q2 = document.querySelector('input[name="q2"]:checked');
+        const q3 = document.querySelector('input[name="q3"]:checked');
+        const q4 = document.querySelector('input[name="q4"]:checked');
+        const q5 = document.querySelector('input[name="q5"]:checked');
+        return q1 && q2 && q3 && q4 && q5;
+    }
+
+    // 显示提示（不侵入）
+    function showWarning() {
+        // 创建临时提示元素
+        let warnDiv = document.querySelector('.temp-warning');
+        if (warnDiv) warnDiv.remove();
+        warnDiv = document.createElement('div');
+        warnDiv.className = 'temp-warning';
+        warnDiv.textContent = '请回答所有问题后再签字确认。';
+        warnDiv.style.color = '#b33';
+        warnDiv.style.fontSize = '0.85rem';
+        warnDiv.style.marginTop = '0.5rem';
+        warnDiv.style.textAlign = 'right';
+        const btnArea = document.querySelector('.btn-area');
+        btnArea.appendChild(warnDiv);
+        setTimeout(() => {
+            if (warnDiv) warnDiv.remove();
+        }, 2500);
+    }
+
+    signBtn.addEventListener('click', function() {
+        if (!isAllQuestionsAnswered()) {
+            showWarning();
+            return;
+        }
+        // 已经全部作答，执行签字
+        if (signatureSpan.innerText === '') {
+            signatureSpan.innerText = '林渡';
+        }
+        signBtn.disabled = true;
+    });
+</script>
+</body>
+</html>
