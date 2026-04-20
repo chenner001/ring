@@ -122,55 +122,7 @@
 
     <footer>© 2026 cococola Search</footer>
 
-    <script>
-        const searchInput = document.getElementById('searchInput');
-        const addressBar = document.getElementById('addressBar');
-
-        // 关键词映射表（不区分大小写）
-        const keywordMap = {
-            "ss": "jewelry-card.html",
-            "苏晚": "sousuosuwan.html",
-            "沈夜": "shenyeweibo.html",
-            "沈清书": "news-shen.html",
-            "陆鸣": "luming.html",
-            "兰溪大学": "lanxidaxue.html",
-            "城南废弃工厂": "gongchang.html",
-            "林渡": "lindubaike.html",
-            "苏念": "sunian.html",
-            "兰溪市整形外科": "zhengxingwaike.html",
-            "光曦福利院": "sousuoguangxi.html"
-        };
-
-        // 搜索框回车事件
-        searchInput.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                const keyword = this.value.trim();
-                // 不区分大小写匹配
-                let matchedUrl = null;
-                // 先精确匹配（包括大小写不敏感）
-                for (let [key, url] of Object.entries(keywordMap)) {
-                    if (keyword.toLowerCase() === key.toLowerCase()) {
-                        matchedUrl = url;
-                        break;
-                    }
-                }
-                if (matchedUrl) {
-                    window.open(matchedUrl, '_blank');
-                } else {
-                    // 无匹配时，可控制台输出，不做跳转
-                    console.log('未找到匹配的关键词:', keyword);
-                }
-                // 清空输入框（可选）
-                // this.value = '';
-            }
-        });
-
-        // 地址栏回车不做跳转（保持UI一致）
-        addressBar.addEventListener('keydown', function(e) {
-            if (e.key === 'Enter') {
-                console.log('地址栏输入:', this.value.trim());
-            }
-        });
-    </script>
+    <!-- 引入独立的跳转逻辑脚本 -->
+    <script src="jump.js"></script>
 </body>
 </html>
